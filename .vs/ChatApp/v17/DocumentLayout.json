@@ -1,17 +1,17 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "D:\\s5623772\\PFI\\ChatApp\\",
+  "WorkspaceRootPath": "D:\\s5623772\\Chat-App\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{1A80ACD2-292D-4325-844C-0AEC35288232}|ChatApp.vcxproj|D:\\s5623772\\PFI\\ChatApp\\ClientSocket.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{1A80ACD2-292D-4325-844C-0AEC35288232}|ChatApp.vcxproj|solutionrelative:ClientSocket.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{1A80ACD2-292D-4325-844C-0AEC35288232}|ChatApp.vcxproj|D:\\s5623772\\Chat-App\\HostSocket.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{1A80ACD2-292D-4325-844C-0AEC35288232}|ChatApp.vcxproj|solutionrelative:HostSocket.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1A80ACD2-292D-4325-844C-0AEC35288232}|ChatApp.vcxproj|D:\\s5623772\\PFI\\ChatApp\\ClientSocket.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{1A80ACD2-292D-4325-844C-0AEC35288232}|ChatApp.vcxproj|solutionrelative:ClientSocket.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{1A80ACD2-292D-4325-844C-0AEC35288232}|ChatApp.vcxproj|D:\\s5623772\\Chat-App\\HostSocket.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{1A80ACD2-292D-4325-844C-0AEC35288232}|ChatApp.vcxproj|solutionrelative:HostSocket.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1A80ACD2-292D-4325-844C-0AEC35288232}|ChatApp.vcxproj|D:\\s5623772\\PFI\\ChatApp\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "AbsoluteMoniker": "D:0:0:{1A80ACD2-292D-4325-844C-0AEC35288232}|ChatApp.vcxproj|D:\\s5623772\\Chat-App\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{1A80ACD2-292D-4325-844C-0AEC35288232}|ChatApp.vcxproj|solutionrelative:main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
@@ -28,11 +28,11 @@
               "$type": "Document",
               "DocumentIndex": 2,
               "Title": "main.cpp",
-              "DocumentMoniker": "D:\\s5623772\\PFI\\ChatApp\\main.cpp",
+              "DocumentMoniker": "D:\\s5623772\\Chat-App\\main.cpp",
               "RelativeDocumentMoniker": "main.cpp",
-              "ToolTip": "D:\\s5623772\\PFI\\ChatApp\\main.cpp",
+              "ToolTip": "D:\\s5623772\\Chat-App\\main.cpp",
               "RelativeToolTip": "main.cpp",
-              "ViewState": "AQIAADAAAAAAAAAAAAAAAFkAAAABAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-10-03T13:16:07.596Z",
               "IsPinned": true,
@@ -41,27 +41,27 @@
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "ClientSocket.h",
-              "DocumentMoniker": "D:\\s5623772\\PFI\\ChatApp\\ClientSocket.h",
-              "RelativeDocumentMoniker": "ClientSocket.h",
-              "ToolTip": "D:\\s5623772\\PFI\\ChatApp\\ClientSocket.h",
-              "RelativeToolTip": "ClientSocket.h",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAIAAAAVAAAA",
+              "Title": "HostSocket.h",
+              "DocumentMoniker": "D:\\s5623772\\Chat-App\\HostSocket.h",
+              "RelativeDocumentMoniker": "HostSocket.h",
+              "ToolTip": "D:\\s5623772\\Chat-App\\HostSocket.h",
+              "RelativeToolTip": "HostSocket.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABMAAAAYAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-10-25T14:39:47.174Z",
+              "WhenOpened": "2024-10-28T15:39:06.714Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "ClientSocket.cpp",
-              "DocumentMoniker": "D:\\s5623772\\PFI\\ChatApp\\ClientSocket.cpp",
-              "RelativeDocumentMoniker": "ClientSocket.cpp",
-              "ToolTip": "D:\\s5623772\\PFI\\ChatApp\\ClientSocket.cpp",
-              "RelativeToolTip": "ClientSocket.cpp",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABsAAAAXAAAA",
+              "Title": "HostSocket.cpp",
+              "DocumentMoniker": "D:\\s5623772\\Chat-App\\HostSocket.cpp",
+              "RelativeDocumentMoniker": "HostSocket.cpp",
+              "ToolTip": "D:\\s5623772\\Chat-App\\HostSocket.cpp",
+              "RelativeToolTip": "HostSocket.cpp",
+              "ViewState": "AQIAAAkAAAAAAAAAAAAAAC8AAAAbAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-10-25T14:40:28.473Z",
+              "WhenOpened": "2024-10-28T15:40:17.933Z",
               "EditorCaption": ""
             }
           ]

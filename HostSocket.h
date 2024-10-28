@@ -6,6 +6,8 @@
 #include <string>
 #include <memory>
 
+//Server socket object
+
 class HostSocket
 {
 public:
