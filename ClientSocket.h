@@ -3,6 +3,7 @@
 #include <ws2tcpip.h>
 #include <string>
 #include <stdexcept>
+#include <iostream>
 
 class HostSocket;
 
@@ -10,7 +11,7 @@ class ClientSocket
 {
 public:
 	ClientSocket();
-	ClientSocket(int _port);
+	ClientSocket(std::string _IPaddress, int _port);
 	~ClientSocket();
 	bool Receive(std::string& _message);
 	void Send(const std::string& _message);

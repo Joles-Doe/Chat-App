@@ -135,14 +135,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ClientSocket.cpp" />
-    <ClCompile Include="CustomWidget.cpp" />
     <ClCompile Include="HostSocket.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Wsa.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ClientSocket.h" />
-    <ClInclude Include="CustomWidget.h" />
     <ClInclude Include="HostSocket.h" />
     <ClInclude Include="Wsa.h" />
   </ItemGroup>

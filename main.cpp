@@ -3,6 +3,7 @@
 #include "Wsa.h"
 #include "HostSocket.h"
 #include "ClientSocket.h"
+#include <conio.h>
 
 void Server();
 void Connect();
@@ -85,14 +86,19 @@ void Server()
 
 void Connect()
 {
-	ClientSocket client(8080);
+	ClientSocket client("", 8080);
 	std::cout << "Client connected to port 8080" << std::endl;
 
 	std::string buffer;
 
 	while (true)
 	{
-		std::cin >> buffer;
-		client.Send(buffer);
+		char ch;
+		do
+		{
+			ch = _getch();
+			buffer = ch;
+			client.Send(buffer);
+		} while (ch != 'q');
 	}
 }
