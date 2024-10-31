@@ -137,11 +137,13 @@
     <ClCompile Include="ClientSocket.cpp" />
     <ClCompile Include="HostSocket.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MainWindow.cpp" />
     <ClCompile Include="Wsa.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ClientSocket.h" />
     <ClInclude Include="HostSocket.h" />
+    <ClInclude Include="MainWindow.h" />
     <ClInclude Include="Wsa.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
