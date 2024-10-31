@@ -4,4 +4,4 @@ x64
 
 ChatApp
 
-*.user
+*.vcxproj.user
