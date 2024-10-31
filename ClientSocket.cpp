@@ -6,21 +6,29 @@ ClientSocket::ClientSocket()
 
 ClientSocket::ClientSocket(int _port)
 {
-	addrinfo hints = { 0 };
+	addrinfo *result = NULL, *ptr = NULL, hints;
+
+	ZeroMemory(&hints, sizeof(hints));
 	hints.ai_family = AF_UNSPEC;
 	hints.ai_socktype = SOCK_STREAM;
 	hints.ai_protocol = IPPROTO_TCP;
 	hints.ai_flags = AI_PASSIVE;
-	addrinfo* result = NULL;
+
+	//Replace NULL with IP address when not connecting locally
 	if (getaddrinfo(NULL, std::to_string(_port).c_str(), &hints, &result) != 0)
 	{
 		throw std::runtime_error("Failed to resolve server address or port");
 	}
-	mSelectedSocket = socket(result->ai_family, result->ai_socktype,
-		result->ai_protocol);
+
+	//Attempt to connect to the first address
+	ptr = result;
+	//Create a socket for connecting to the server
+	mSelectedSocket = socket(ptr->ai_family, ptr->ai_socktype,
+		ptr->ai_protocol);
 	if (mSelectedSocket == INVALID_SOCKET)
 	{
 		freeaddrinfo(result);
+		WSACleanup();
 		throw std::runtime_error("Failed to create socket");
 	}
 	if (connect(mSelectedSocket, result->ai_addr, (int)result->ai_addrlen) == SOCKET_ERROR)

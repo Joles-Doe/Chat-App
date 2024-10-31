@@ -1,8 +1,5 @@
 #include <iostream>
 #include <vector>
-//#include <FL/FL.h>
-//#include <FL/FL_Window.h>
-//#include "MainWindow.h"
 #include "Wsa.h"
 #include "HostSocket.h"
 #include "ClientSocket.h"

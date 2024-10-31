@@ -1,3 +1,1 @@
-﻿  ClientSocket.cpp
-D:\s5623772\PFI\ChatApp\ClientSocket.cpp(73,69): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-  ChatApp.vcxproj -> D:\s5623772\PFI\ChatApp\x64\Debug\ChatApp.exe
+﻿  ChatApp.vcxproj -> D:\s5623772\Chat-App\x64\Debug\ChatApp.exe

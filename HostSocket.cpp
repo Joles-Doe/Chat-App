@@ -11,7 +11,7 @@ HostSocket::HostSocket(int _port)
 	hints.ai_protocol = IPPROTO_TCP;
 	hints.ai_flags = AI_PASSIVE;
 
-	//Resolve local address and port for server
+	//Resolve address and port for server
 	if (getaddrinfo(NULL, std::to_string(_port).c_str(), &hints, &result) != 0)
 	{
 		WSACleanup();
