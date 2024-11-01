@@ -2,6 +2,7 @@
 #include <vector>
 #include <FL/Fl.H>
 #include "MainWindow.h"
+#include "User.h"
 #include "Wsa.h"
 #include "HostSocket.h"
 #include "ClientSocket.h"
@@ -15,41 +16,22 @@ int main(int argc, char* argv[]) //Ensure main has these parameters
 	//Set theming
 	Fl::scheme("gtk+"); //Must be called before any other FLTK function
 
+	//Initialize winsock
+	Wsa wsa;
+	std::cout << "Initialized Winsock" << std::endl;
+
+	//Initialize window
 	MainWindow win;
+	std::cout << "Initialized Window" << std::endl;
+
+	//Pass a user reference to the FLTK window
+	std::shared_ptr<User> user = std::make_shared<User>();
+	win.SetUser(user);
 
 	//Display the window
 	win.show(argc, argv); //For the first win.show function, pass argc and argv as parameters
 
 	return Fl::run(); //Must be called at the end of main()
-
-	Wsa wsa;
-	std::cout << "Initialized Winsock" << std::endl;
-
-
-
-
-
-
-
-
-
-	/*int choice{ 0 };
-	do
-	{
-		std::cout << "1. Server\n2. Client" << std::endl;
-		std::cin >> choice;
-
-		switch (choice)
-		{
-		case 1:
-			Server();
-			break;
-		case 2:
-			Connect();
-		default:
-			break;
-		}
-	} while (choice != (1 || 2));*/
 }
 
 void Server()
