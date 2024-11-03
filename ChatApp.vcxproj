@@ -138,6 +138,7 @@
     <ClCompile Include="HostSocket.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainWindow.cpp" />
+    <ClCompile Include="Menu.cpp" />
     <ClCompile Include="ServerButton.cpp" />
     <ClCompile Include="User.cpp" />
     <ClCompile Include="Wsa.cpp" />
@@ -146,6 +147,7 @@
     <ClInclude Include="ClientSocket.h" />
     <ClInclude Include="HostSocket.h" />
     <ClInclude Include="MainWindow.h" />
+    <ClInclude Include="Menu.h" />
     <ClInclude Include="ServerButton.h" />
     <ClInclude Include="User.h" />
     <ClInclude Include="Wsa.h" />

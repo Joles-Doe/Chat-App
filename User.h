@@ -1,18 +1,22 @@
 #pragma once
-
-/*
-if host:
-init hostsocket AND clientsocket (localhost clientsocket)
-
-if client:
-grab IP address and init clientsocket
-*/
+#include "HostSocket.h"
+#include "ClientSocket.h"
+#include <memory>
+#include <vector>
+#include "Wsa.h"
 
 class User
 {
 public:
+	User();
+	~User();
 
+	void InitHost();
+	void InitClient();
 private:
+	Wsa wsa;
 
+	HostSocket host;
+	ClientSocket client;
 };
 

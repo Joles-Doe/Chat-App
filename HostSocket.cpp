@@ -1,5 +1,9 @@
 #include "HostSocket.h"
 
+HostSocket::HostSocket()
+{
+}
+
 HostSocket::HostSocket(int _port)
 	: mSelectedSocket(INVALID_SOCKET)
 {

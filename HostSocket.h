@@ -11,6 +11,7 @@
 class HostSocket
 {
 public:
+	HostSocket();
 	HostSocket(int _port);
 	~HostSocket();
 

@@ -1,28 +1,27 @@
 #pragma once
 #include <FL/Fl_Window.H>
-#include <FL/Fl_Flex.H>
 #include <FL/Fl_Button.H>
-#include "ServerButton.h"
-#include "User.h"
-#include <memory>
+//#include <FL/Fl_Text_Buffer.H>
+//#include <FL/Fl_Text_Display.H>
+#include <FL/Fl_Group.H>
 
-struct ClientButton;
+#include "User.h"
+#include "Menu.h"
+
+#include <memory>
 
 class MainWindow : public Fl_Window
 {
 public:
-    MainWindow();
+    MainWindow(std::shared_ptr<User> _user, int _w, int _h);
     ~MainWindow();
 
     std::shared_ptr<User> GetUser();
     void SetUser(std::shared_ptr<User> _user);
+
 private:
     std::shared_ptr<User> user;
 
-    Fl_Flex mMainBox;
-    Fl_Button mServerButton;
-    Fl_Button mClientButton;
+    Menu menu;
 
-    ServerButton mTestButton;
 };
-

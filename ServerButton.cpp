@@ -1,21 +1,20 @@
 #include "ServerButton.h"
+#include "Menu.h"
 
-ServerButton::ServerButton(int _x, int _y, int _w, int _h) : mButton(_x, _y, _w, _h)
+ServerButton::ServerButton(ServerButton* _ref, Menu* _parent, int _x, int _y, int _w, int _h) : Fl_Button(_x, _y, _w, _h, "HIDE")
 {
-    
-}
-
-void ServerButton::AddCallback(ServerButton* ref)
-{
-
+    parent = _parent;
+    callback(StaticButtonListener, (void*)_ref);
 }
 
 void ServerButton::StaticButtonListener(Fl_Widget* w, void* _userdata)
 {
-
+    //Once called, typecast the reference back to the button and call it's individual function
+    ServerButton* buttonFunction = (ServerButton*)_userdata;
+    buttonFunction->ButtonListener();
 }
 
 void ServerButton::ButtonListener()
 {
-
+    parent->hide();
 }
