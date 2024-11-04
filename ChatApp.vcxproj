@@ -139,7 +139,9 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainWindow.cpp" />
     <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="Object.cpp" />
     <ClCompile Include="ServerButton.cpp" />
+    <ClCompile Include="Timer.cpp" />
     <ClCompile Include="User.cpp" />
     <ClCompile Include="Wsa.cpp" />
   </ItemGroup>
@@ -148,7 +150,9 @@
     <ClInclude Include="HostSocket.h" />
     <ClInclude Include="MainWindow.h" />
     <ClInclude Include="Menu.h" />
+    <ClInclude Include="Object.h" />
     <ClInclude Include="ServerButton.h" />
+    <ClInclude Include="Timer.h" />
     <ClInclude Include="User.h" />
     <ClInclude Include="Wsa.h" />
   </ItemGroup>

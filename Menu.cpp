@@ -7,3 +7,8 @@ Menu::Menu(std::shared_ptr<User> _user, int _x, int _y, int _w, int _h)
 	user = _user;
 	end();
 }
+
+void Menu::Update()
+{
+
+}
