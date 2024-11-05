@@ -2,12 +2,11 @@
 #include "Timer.h"
 #include <FL/Fl_Window.H>
 #include <FL/Fl_Button.H>
-//#include <FL/Fl_Text_Buffer.H>
-//#include <FL/Fl_Text_Display.H>
 #include <FL/Fl_Group.H>
 
 #include "User.h"
 #include "Menu.h"
+#include "InChat.h"
 
 #include <memory>
 #include <vector>
@@ -23,11 +22,13 @@ public:
     std::shared_ptr<User> GetUser();
     void SetUser(std::shared_ptr<User> _user);
 
+    void ChangeState(int _state);
+
 private:
     std::shared_ptr<User> user;
 
     int mState{ 0 };
 
     Menu menu;
-
+    InChat chat;
 };

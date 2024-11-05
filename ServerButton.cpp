@@ -16,5 +16,6 @@ void ServerButton::StaticButtonListener(Fl_Widget* w, void* _userdata)
 
 void ServerButton::ButtonListener()
 {
-    parent->hide();
+    printf("Hey!\n");
+    parent->ChangeParentState(1);
 }
