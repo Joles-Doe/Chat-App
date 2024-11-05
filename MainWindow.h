@@ -10,6 +10,7 @@
 #include "Menu.h"
 
 #include <memory>
+#include <vector>
 
 class MainWindow : public Fl_Window, Timer
 {
@@ -24,6 +25,8 @@ public:
 
 private:
     std::shared_ptr<User> user;
+
+    int mState{ 0 };
 
     Menu menu;
 

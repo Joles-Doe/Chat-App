@@ -1,7 +1,7 @@
-#include "Menu.h"
+ #include "Menu.h"
 
-Menu::Menu(std::shared_ptr<User> _user, int _x, int _y, int _w, int _h) 
-	: Fl_Group(_x, _y, _w, _h),
+Menu::Menu(std::shared_ptr<User> _user, int _x, int _y, int _w, int _h)
+	: Fl_Window(_x, _y, _w, _h), Object(this),
 	mServerButton(&mServerButton, this, 100, 100, 200, 200)
 {
 	user = _user;
@@ -10,5 +10,5 @@ Menu::Menu(std::shared_ptr<User> _user, int _x, int _y, int _w, int _h)
 
 void Menu::Update()
 {
-
+	
 }
