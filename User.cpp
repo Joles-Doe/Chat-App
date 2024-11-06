@@ -6,46 +6,56 @@ User::User()
 
 User::~User()
 {
+	if (host != nullptr)
+	{
+		delete host;
+	}
+	if (client != nullptr)
+	{
+		delete client;
+	}
 }
 
-void User::InitHost()
+void User::Update()
 {
-	HostSocket host(8080);
-	std::cout << "Server listening on port 8080" << std::endl;
-
-	std::vector<std::shared_ptr<ClientSocket>> clients;
-
-	while (true)
+	if (host != nullptr)
 	{
-		std::shared_ptr<ClientSocket> client = host.accept();
+		std::shared_ptr<ClientSocket> client = host->accept();
 		if (client)
 		{
 			std::cout << "Client Connected" << std::endl;
-			clients.push_back(client);
+			mClientList.push_back(client);
 		}
 
-		for (size_t ci = 0; ci < clients.size(); ++ci)
+		for (size_t ci = 0; ci < mClientList.size(); ++ci)
 		{
 			std::string message;
-			while (clients.at(ci)->Receive(message))
+			while (mClientList.at(ci)->Receive(message))
 			{
 				std::cout << "Client sent message: " << message.c_str() << std::endl;
 				std::cout << "Sending to clients" << std::endl;
-				for (size_t si = 0; si < clients.size(); ++si)
+
+				for (size_t si = 0; si < mClientList.size(); ++si)
 				{
-					clients.at(si)->Send(message);
+					mClientList.at(si)->Send(message);
 				}
 			}
-			if (clients.at(ci)->GetClosed())
+			SendToBuffer(message);
+			if (mClientList.at(ci)->GetClosed())
 			{
 				std::cout << "Client Disconnected" << std::endl;
-				clients.erase(clients.begin() + ci);
+				mClientList.erase(mClientList.begin() + ci);
 				--ci;
 			}
 		}
 		std::cout << "Tick" << std::endl;
-		Sleep(1000);
 	}
+}
+
+void User::InitHost()
+{
+	host = new HostSocket(8080);
+	std::cout << "Server listening on port 8080" << std::endl;
 }
 
 void User::InitClient()
@@ -56,3 +66,17 @@ void User::InitClient()
 	std::string buffer;
 	
 }
+
+void User::SendToBuffer(std::string _message)
+{
+	mMessageBuffer = _message;
+}
+
+
+std::string User::GetSentMessage()
+{
+	std::string send = mMessageBuffer;
+	mMessageBuffer.clear();
+	return send;
+}
+

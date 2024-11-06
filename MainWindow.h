@@ -24,6 +24,8 @@ public:
 
     void ChangeState(int _state);
 
+    void InitHost();
+
 private:
     std::shared_ptr<User> user;
 

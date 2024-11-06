@@ -21,3 +21,9 @@ void Menu::ChangeParentState(int _state)
 	MainWindow* windowParent = (MainWindow*)parent;
 	windowParent->ChangeState(_state);
 }
+
+void Menu::ParentInitHost()
+{
+	MainWindow* windowParent = (MainWindow*)parent;
+	windowParent->InitHost();
+}

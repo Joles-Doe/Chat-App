@@ -18,6 +18,8 @@ public:
 
 	void ChangeParentState(int _state);
 
+	void ParentInitHost();
+
 private:
 	void* parent{ nullptr };
 

@@ -20,7 +20,11 @@ InChat::InChat(std::shared_ptr<User> _user, int _x, int _y, int _w, int _h)
 
 void InChat::Update()
 {
-
+	std::string newMessage = user->GetSentMessage();
+	if (newMessage.empty() == false)
+	{
+		mBuffer.append(newMessage.c_str(), newMessage.length());
+	}
 }
 
 void InChat::StaticTextInput(Fl_Widget* _widget, void* _userdata)

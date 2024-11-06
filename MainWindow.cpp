@@ -19,6 +19,7 @@ MainWindow::~MainWindow()
 //Update function - call each group's update function if they're active
 void MainWindow::Update()
 {
+    user->Update();
     switch (mState)
     {
     case 0:
@@ -53,4 +54,9 @@ void MainWindow::SetUser(std::shared_ptr<User> _user)
 void MainWindow::ChangeState(int _state)
 {
     mState = _state;
+}
+
+void MainWindow::InitHost()
+{
+    user->InitHost();
 }

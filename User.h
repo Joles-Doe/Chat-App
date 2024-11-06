@@ -11,12 +11,21 @@ public:
 	User();
 	~User();
 
+	void Update();
+
 	void InitHost();
 	void InitClient();
+
+	std::string GetSentMessage();
 private:
 	Wsa wsa;
 
-	HostSocket host;
-	ClientSocket client;
+	HostSocket* host{ nullptr };
+	ClientSocket* client{ nullptr };
+
+	std::vector<std::shared_ptr<ClientSocket>> mClientList;
+
+	void SendToBuffer(std::string _message);
+	std::string mMessageBuffer;
 };
 
