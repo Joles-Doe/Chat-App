@@ -1,20 +1,20 @@
 #include "InChat.h"
 
 InChat::InChat(std::shared_ptr<User> _user, int _x, int _y, int _w, int _h)
-	: Fl_Window(_x, _y, _w, _h), Object(this),
+	: Fl_Window(_x, _y, _w, _h),
 	mBuffer(),
-	mDisplay(100, 100, 200, 200),
-	mInput(100, 400, 75, 75, "Text: ")
+	mDisplay(100, 100, 400, 200),
+	mInput(100, 400, 75, 25, "Text: ")
 {
 	user = _user;
 
 	mDisplay.buffer(mBuffer);
 	
 	mInput.when(FL_WHEN_ENTER_KEY);
+	mInput.maximum_size(125);
 	mInput.callback(StaticTextInput, (void*)this);
 
 	end();
-
 	hide();
 }
 
@@ -35,7 +35,13 @@ void InChat::StaticTextInput(Fl_Widget* _widget, void* _userdata)
 
 void InChat::TextInput()
 {
-	mBuffer.append("\n", 2);
-	mBuffer.append(mInput.value(), mInput.size());
+	std::string text;
+	text.append(mInput.value());
+	text.append("\n");
+
+	mBuffer.append(text.c_str(), text.size());
+
+	user->Send(text);
+
 	mInput.static_value("");
 }

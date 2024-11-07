@@ -1,29 +1,32 @@
 #pragma once
 
-#include "Object.h"
 #include <FL/Fl.H>
 #include <FL/Fl_Window.H>
+
+#include <FL/Fl_Button.H>
 
 #include <memory>
 #include "User.h"
 
-#include "ServerButton.h"
+class MainWindow;
 
-class Menu : public Fl_Window, Object 
+class Menu : public Fl_Window
 {
 public:
-	Menu(std::shared_ptr<User> _user, void* _parent, int _x, int _y, int _w, int _h);
+	Menu(std::shared_ptr<User> _user, MainWindow* _parent, int _x, int _y, int _w, int _h);
 
 	void Update();
 
-	void ChangeParentState(int _state);
-
-	void ParentInitHost();
+	void ChangeState(int _state);
 
 private:
-	void* parent{ nullptr };
+	MainWindow* mParentWindow;
 
 	std::shared_ptr<User> user;
 
-	ServerButton mServerButton;
+	//Buttons and listeners
+	//Server button
+	Fl_Button mServerButton;
+	static void StaticButtonListener(Fl_Widget* w, void* _userdata);
+	void ButtonListener();
 };

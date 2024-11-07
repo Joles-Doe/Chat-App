@@ -19,21 +19,28 @@ MainWindow::~MainWindow()
 //Update function - call each group's update function if they're active
 void MainWindow::Update()
 {
+    //Call user update
     user->Update();
+
+    //Check current state
     switch (mState)
     {
     case 0:
-        chat.hide();
-        if (menu.visible() == false)
+        //Check if windows need to be hidden / shown
+        if (mStateChanged == true)
         {
+            mStateChanged = false;
             menu.show();
+            chat.hide();
         }
+        //Call active screen's update function
         menu.Update();
         break;
     case 1:
-        menu.hide();
-        if (chat.visible() == false)
+        if (mStateChanged == true)
         {
+            mStateChanged = false;
+            menu.hide();
             chat.show();
         }
         chat.Update();
@@ -54,6 +61,7 @@ void MainWindow::SetUser(std::shared_ptr<User> _user)
 void MainWindow::ChangeState(int _state)
 {
     mState = _state;
+    mStateChanged = true;
 }
 
 void MainWindow::InitHost()

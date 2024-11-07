@@ -1,13 +1,15 @@
 #include "Menu.h"
-
 #include "MainWindow.h"
 
-Menu::Menu(std::shared_ptr<User> _user, void* _parent, int _x, int _y, int _w, int _h)
-	: Fl_Window(_x, _y, _w, _h), Object(this),
-	parent(_parent),
-	mServerButton(&mServerButton, this, 100, 100, 200, 200)
+Menu::Menu(std::shared_ptr<User> _user, MainWindow* _parent, int _x, int _y, int _w, int _h)
+	: Fl_Window(_x, _y, _w, _h),
+	mParentWindow(_parent),
+	mServerButton(100, 100, 200, 100, "SERVER")
 {
 	user = _user;
+
+	mServerButton.callback(StaticButtonListener, (void*)this);
+
 	end();
 }
 
@@ -16,14 +18,20 @@ void Menu::Update()
 	
 }
 
-void Menu::ChangeParentState(int _state)
+void Menu::ChangeState(int _state)
 {
-	MainWindow* windowParent = (MainWindow*)parent;
-	windowParent->ChangeState(_state);
+	mParentWindow->ChangeState(_state);
 }
 
-void Menu::ParentInitHost()
+//Button listeners
+//Server button
+void Menu::StaticButtonListener(Fl_Widget* w, void* _userdata)
 {
-	MainWindow* windowParent = (MainWindow*)parent;
-	windowParent->InitHost();
+	Menu* buttonFunction = (Menu*)_userdata;
+	buttonFunction->ButtonListener();
+}
+void Menu::ButtonListener()
+{
+	user->InitHost();
+	ChangeState(1);
 }

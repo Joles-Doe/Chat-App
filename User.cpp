@@ -1,9 +1,5 @@
 #include "User.h"
 
-User::User()
-{
-}
-
 User::~User()
 {
 	if (host != nullptr)
@@ -20,6 +16,7 @@ void User::Update()
 {
 	if (host != nullptr)
 	{
+		//Check if someone new has joined
 		std::shared_ptr<ClientSocket> client = host->accept();
 		if (client)
 		{
@@ -27,20 +24,25 @@ void User::Update()
 			mClientList.push_back(client);
 		}
 
+		//For each client, check if there's new data
 		for (size_t ci = 0; ci < mClientList.size(); ++ci)
 		{
+			//Check if client has sent a message
 			std::string message;
 			while (mClientList.at(ci)->Receive(message))
 			{
 				std::cout << "Client sent message: " << message.c_str() << std::endl;
-				std::cout << "Sending to clients" << std::endl;
-
-				for (size_t si = 0; si < mClientList.size(); ++si)
-				{
-					mClientList.at(si)->Send(message);
-				}
+				//Send that message to the other clients
+				Send(message, ci);
 			}
+
+			//Send the message to the host's buffer
 			SendToBuffer(message);
+
+			/// NOTE TO SELF
+			/// CHARACTER LIMIT IS 125 CHARACTERS, ENSURE CHAT IS LIMITED TO 125
+			
+			//Check if client has disconnected
 			if (mClientList.at(ci)->GetClosed())
 			{
 				std::cout << "Client Disconnected" << std::endl;
@@ -48,30 +50,30 @@ void User::Update()
 				--ci;
 			}
 		}
-		std::cout << "Tick" << std::endl;
+		//std::cout << "Tick" << std::endl;
 	}
 }
 
 void User::InitHost()
 {
 	host = new HostSocket(8080);
-	std::cout << "Server listening on port 8080" << std::endl;
 }
 
 void User::InitClient()
 {
-	ClientSocket client("", 8080);
-	std::cout << "Client connected to port 8080" << std::endl;
-	
-	std::string buffer;
-	
+	ClientSocket client("", 8080);	
 }
 
-void User::SendToBuffer(std::string _message)
+void User::Send(std::string _msg, int _userIterator)
 {
-	mMessageBuffer = _message;
+	for (size_t si = 0; si < mClientList.size(); ++si)
+	{
+		if (si != _userIterator)
+		{
+			mClientList.at(si)->Send(_msg);
+		}
+	}
 }
-
 
 std::string User::GetSentMessage()
 {
@@ -80,3 +82,7 @@ std::string User::GetSentMessage()
 	return send;
 }
 
+void User::SendToBuffer(std::string _message)
+{
+	mMessageBuffer = _message;
+}

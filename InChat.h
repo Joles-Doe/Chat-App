@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Object.h"
 #include <FL/Fl.H>
 #include <FL/Fl_Window.H>
 
@@ -12,7 +11,7 @@
 #include <memory>
 #include "User.h"
 
-class InChat : public Fl_Window, Object
+class InChat : public Fl_Window
 {
 public:
 	InChat(std::shared_ptr<User> _user, int _x, int _y, int _w, int _h);
@@ -24,8 +23,10 @@ private:
 
 	Fl_Text_Buffer mBuffer;
 	Fl_Text_Display mDisplay;
-	Fl_Input mInput;
 
+	//Buttons and listeners
+	//Input button
+	Fl_Input mInput;
 	static void StaticTextInput(Fl_Widget* _widget, void* _userdata);
 	void TextInput();
 };

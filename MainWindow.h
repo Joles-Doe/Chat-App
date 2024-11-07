@@ -25,10 +25,12 @@ public:
     void ChangeState(int _state);
 
     void InitHost();
+    void InitClient();
 
 private:
     std::shared_ptr<User> user;
 
+    bool mStateChanged{ false };
     int mState{ 0 };
 
     Menu menu;

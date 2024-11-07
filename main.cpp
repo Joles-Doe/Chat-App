@@ -12,12 +12,11 @@ int main(int argc, char* argv[]) //Ensure main has these parameters
 
 	//Initialize user
 	std::shared_ptr<User> user = std::make_shared<User>();
+	std::cout << "Initialized User" << std::endl;
 
 	//Initialize window
 	std::shared_ptr<MainWindow> win = std::make_shared<MainWindow>(user, 800, 800);
-
 	std::cout << "Initialized Window" << std::endl;
-
 
 	//Display the window
 	win->show(argc, argv); //For the first win.show function, pass argc and argv as parameters
