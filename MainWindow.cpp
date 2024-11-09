@@ -5,7 +5,7 @@ MainWindow::MainWindow(std::shared_ptr<User> _user, int _w, int _h)
     menu(_user, this, 0, 0, _w, _h),
     chat(_user, 0, 0, _w, _h)
 {
-    MainWindow::size_range(500, 500);
+    MainWindow::size_range(_w, _h);
     user = _user;
 
     menu.show();
@@ -62,9 +62,4 @@ void MainWindow::ChangeState(int _state)
 {
     mState = _state;
     mStateChanged = true;
-}
-
-void MainWindow::InitHost()
-{
-    user->InitHost();
 }

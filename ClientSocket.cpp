@@ -4,7 +4,7 @@ ClientSocket::ClientSocket()
 {
 }
 
-ClientSocket::ClientSocket(std::string _IPaddress, int _port)
+ClientSocket::ClientSocket(std::string _IPaddress, int _port, std::string _username)
 {
 	if (_IPaddress == "")
 	{
@@ -54,8 +54,9 @@ ClientSocket::ClientSocket(std::string _IPaddress, int _port)
 		throw std::runtime_error("Failed to connect to socket");
 	}
 	
-	//Send test buffer
-	if (send(mSelectedSocket, "TEST", 4, 0) == SOCKET_ERROR)
+	std::string userInformation = WrapInformation(_username);
+	//Send user info buffer
+	if (send(mSelectedSocket, userInformation.c_str(), userInformation.size(), 0) == SOCKET_ERROR)
 	{
 		closesocket(mSelectedSocket);
 		WSACleanup();
@@ -125,4 +126,15 @@ void ClientSocket::SetSocket(SOCKET _socket)
 bool ClientSocket::GetClosed()
 {
 	return mClosed;
+}
+
+std::string ClientSocket::WrapInformation(std::string _username)
+{
+	if (_username == "")
+	{
+		_username = "GUEST";
+	}
+
+	std::string userInformation = "/cmd cu " + _username;
+	return userInformation;
 }

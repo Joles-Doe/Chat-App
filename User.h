@@ -1,5 +1,6 @@
 #pragma once
 #include "Wsa.h"
+#include "Client.h"
 #include "HostSocket.h"
 #include "ClientSocket.h"
 
@@ -15,10 +16,13 @@ public:
 
 	void Update();
 
-	void InitHost();
-	void InitClient();
+	void InitHost(std::string _username = "");
+	void InitClient(std::string _username = "");
 
-	void Send(std::string _msg, int _userIterator = -1);
+	void Send(std::string &_msg, int _userIterator = -1);
+
+	std::string GetUsername();
+	void SetUsername(std::string _username);
 
 	//Host related
 	std::string GetSentMessage();
@@ -28,10 +32,14 @@ private:
 	HostSocket* host{ nullptr };
 	ClientSocket* client{ nullptr };
 
+	std::string mUsername;
 
 	//Host related
-	std::vector<std::shared_ptr<ClientSocket>> mClientList;
+	std::vector<std::shared_ptr<Client>> mClientList;
+	bool Command(std::string _message, int _clientIterator = -1);
+	bool mCommandCalled{ false };
 
+	//Used by both
 	void SendToBuffer(std::string _message);
 	std::string mMessageBuffer;
 };

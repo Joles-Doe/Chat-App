@@ -39,9 +39,9 @@ void InChat::TextInput()
 	text.append(mInput.value());
 	text.append("\n");
 
-	mBuffer.append(text.c_str(), text.size());
-
 	user->Send(text);
+
+	mBuffer.append(text.c_str(), text.size());
 
 	mInput.static_value("");
 }
