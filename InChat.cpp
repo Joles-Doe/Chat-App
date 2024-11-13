@@ -11,7 +11,7 @@ InChat::InChat(std::shared_ptr<User> _user, int _x, int _y, int _w, int _h)
 	mDisplay.buffer(mBuffer);
 	
 	mInput.when(FL_WHEN_ENTER_KEY);
-	mInput.maximum_size(125);
+	mInput.maximum_size(115);
 	mInput.callback(StaticTextInput, (void*)this);
 
 	end();

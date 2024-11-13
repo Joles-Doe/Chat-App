@@ -22,4 +22,8 @@ int main(int argc, char* argv[]) //Ensure main has these parameters
 	win->show(argc, argv); //For the first win.show function, pass argc and argv as parameters
 
 	return Fl::run(); //Must be called at the end of main()
+
+	/// NOTE TO SELF
+	/// CHARACTER LIMIT IS 125 CHARACTERS, ENSURE CHAT IS LIMITED TO 125
+	/// USERNAME 10 CHAR, CHAT MESSAGE 115
 }

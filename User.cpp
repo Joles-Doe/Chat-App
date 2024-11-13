@@ -48,9 +48,6 @@ void User::Update()
 				//Send the message to the host's buffer
 				SendToBuffer(message);
 			}
-
-			/// NOTE TO SELF
-			/// CHARACTER LIMIT IS 125 CHARACTERS, ENSURE CHAT IS LIMITED TO 125
 			
 			//Check if client has disconnected
 			if (mClientList.at(ci)->GetSocket()->GetClosed())
