@@ -18,7 +18,6 @@ ClientSocket::ClientSocket(std::string _IPaddress, int _port, std::string _usern
 	hints.ai_protocol = IPPROTO_TCP;
 	hints.ai_flags = AI_PASSIVE;
 
-	//Replace NULL with IP address when not connecting locally
 	if (getaddrinfo(_IPaddress.c_str(), std::to_string(_port).c_str(), &hints, &result) != 0)
 	{
 		throw std::runtime_error("Failed to resolve server address or port");
@@ -26,6 +25,7 @@ ClientSocket::ClientSocket(std::string _IPaddress, int _port, std::string _usern
 
 	//Attempt to connect to the first address
 	ptr = result;
+	
 	//Create a socket for connecting to the server
 	for (ptr = result; ptr != NULL; ptr = ptr->ai_next)
 	{
@@ -37,11 +37,21 @@ ClientSocket::ClientSocket(std::string _IPaddress, int _port, std::string _usern
 			throw std::runtime_error("Failed to create socket");
 		}
 
+		//Enable non-blocking
+		u_long mode = 1;
+		if (ioctlsocket(mSelectedSocket, FIONBIO, &mode) == SOCKET_ERROR)
+		{
+			throw std::runtime_error("Failed to set non-blocking");
+		}
+
 		//Connect to server
 		if (connect(mSelectedSocket, ptr->ai_addr, (int)ptr->ai_addrlen) == SOCKET_ERROR)
 		{
-			closesocket(mSelectedSocket);
-			mSelectedSocket = INVALID_SOCKET;
+			if (WSAGetLastError() != WSAEWOULDBLOCK)
+			{
+				closesocket(mSelectedSocket);
+				mSelectedSocket = INVALID_SOCKET;
+			}
 			continue;
 		}
 		break;
@@ -53,7 +63,7 @@ ClientSocket::ClientSocket(std::string _IPaddress, int _port, std::string _usern
 		WSACleanup();
 		throw std::runtime_error("Failed to connect to socket");
 	}
-	
+
 	std::string userInformation = WrapInformation(_username);
 	//Send user info buffer
 	if (send(mSelectedSocket, userInformation.c_str(), userInformation.size(), 0) == SOCKET_ERROR)
@@ -63,13 +73,6 @@ ClientSocket::ClientSocket(std::string _IPaddress, int _port, std::string _usern
 		throw std::runtime_error("Failed to send");
 	}
 	std::cout << "Sent bytes" << std::endl;
-
-	//Set to non-blocking mode
-	u_long mode = 1;
-	if (ioctlsocket(mSelectedSocket, FIONBIO, &mode) == SOCKET_ERROR)
-	{
-		throw std::runtime_error("Failed to set non-blocking");
-	}
 }
 
 ClientSocket::~ClientSocket()
