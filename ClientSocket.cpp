@@ -20,7 +20,7 @@ ClientSocket::ClientSocket(std::string _IPaddress, int _port, std::string _usern
 
 	if (getaddrinfo(_IPaddress.c_str(), std::to_string(_port).c_str(), &hints, &result) != 0)
 	{
-		throw std::runtime_error("Failed to resolve server address or port");
+		throw std::runtime_error("Failed to find address. Did you type it in correctly?");
 	}
 
 	//Attempt to connect to the first address
@@ -34,14 +34,14 @@ ClientSocket::ClientSocket(std::string _IPaddress, int _port, std::string _usern
 		{
 			freeaddrinfo(result);
 			WSACleanup();
-			throw std::runtime_error("Failed to create socket");
+			throw std::runtime_error("Failed to create socket. Try again later.");
 		}
 
 		//Enable non-blocking
 		u_long mode = 1;
 		if (ioctlsocket(mSelectedSocket, FIONBIO, &mode) == SOCKET_ERROR)
 		{
-			throw std::runtime_error("Failed to set non-blocking");
+			throw std::runtime_error("Failed to set non-blocking. Try again later.");
 		}
 
 		//Connect to server
@@ -61,7 +61,7 @@ ClientSocket::ClientSocket(std::string _IPaddress, int _port, std::string _usern
 	{
 		freeaddrinfo(result);
 		WSACleanup();
-		throw std::runtime_error("Failed to connect to socket");
+		throw std::runtime_error("Failed to connect to socket. Try again later.");
 	}
 
 	std::string userInformation = WrapInformation(_username);
@@ -70,7 +70,7 @@ ClientSocket::ClientSocket(std::string _IPaddress, int _port, std::string _usern
 	{
 		closesocket(mSelectedSocket);
 		WSACleanup();
-		throw std::runtime_error("Failed to send");
+		throw std::runtime_error("Failed to connect. Try again later.");
 	}
 	std::cout << "Sent bytes" << std::endl;
 }

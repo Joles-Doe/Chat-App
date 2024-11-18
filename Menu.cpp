@@ -6,10 +6,6 @@ Menu::Menu(std::shared_ptr<User> _user, MainWindow* _parent, int _x, int _y, int
 	mParentWindow(_parent)
 {
 	user = _user;
-	
-	//TO DO:
-	//ADD TAB CALLBACK FUNCTION TO COPY USERNAME VALUE FROM TAB TO TAB
-	//PASS THROUGH USERNAME WHEN SERVER / CLIENT BUTTON IS CLICKED
 
 	mMenuTabs = std::make_unique<Fl_Tabs>(0, 50, _w, _h, "LABEL");
 	{
@@ -66,7 +62,15 @@ void Menu::StaticServerButton(Fl_Widget* w, void* _userdata)
 }
 void Menu::ServerButton()
 {
-	user->InitHost(mServerUsernameInput->value());
+	try
+	{
+		user->InitHost(mServerUsernameInput->value());
+	}
+	catch (const std::runtime_error& e)
+	{
+		fl_alert(e.what());
+		return;
+	}
 	ChangeState(1);
 }
 
@@ -78,6 +82,14 @@ void Menu::StaticClientButton(Fl_Widget* w, void* _userdata)
 }
 void Menu::ClientButton()
 {
-	user->InitClient(mClientUsernameInput->value());
+	try
+	{
+		user->InitClient(mClientUsernameInput->value());
+	}
+	catch (const std::runtime_error& e)
+	{
+		fl_alert(e.what());
+		return;
+	}
 	ChangeState(1);
 }

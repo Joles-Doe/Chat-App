@@ -6,6 +6,7 @@
 #include <FL/Fl_Group.H>
 #include <FL/Fl_Input.H>
 #include <FL/Fl_Button.H>
+#include <FL/fl_ask.H>
 
 #include <memory>
 #include "User.h"

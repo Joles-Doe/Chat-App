@@ -4,7 +4,6 @@
 #include "MainWindow.h"
 #include "User.h"
 
-
 int main(int argc, char* argv[]) //Ensure main has these parameters
 {
 	//Set theming
