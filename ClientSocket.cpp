@@ -33,7 +33,7 @@ ClientSocket::ClientSocket(std::string _IPaddress, int _port, std::string _usern
 		if (mSelectedSocket == INVALID_SOCKET)
 		{
 			freeaddrinfo(result);
-			WSACleanup();
+			//WSACleanup();
 			throw std::runtime_error("Failed to create socket. Try again later.");
 		}
 
@@ -60,7 +60,7 @@ ClientSocket::ClientSocket(std::string _IPaddress, int _port, std::string _usern
 	if (mSelectedSocket == INVALID_SOCKET)
 	{
 		freeaddrinfo(result);
-		WSACleanup();
+		//WSACleanup();
 		throw std::runtime_error("Failed to connect to socket. Try again later.");
 	}
 
@@ -69,7 +69,7 @@ ClientSocket::ClientSocket(std::string _IPaddress, int _port, std::string _usern
 	if (send(mSelectedSocket, userInformation.c_str(), userInformation.size(), 0) == SOCKET_ERROR)
 	{
 		closesocket(mSelectedSocket);
-		WSACleanup();
+		//WSACleanup();
 		throw std::runtime_error("Failed to connect. Try again later.");
 	}
 	std::cout << "Sent bytes" << std::endl;

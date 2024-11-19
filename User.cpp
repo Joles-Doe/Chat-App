@@ -82,6 +82,11 @@ void User::InitHost(std::string _username)
 	{
 		mUsername = _username;
 	}
+
+	if (host != nullptr)
+	{
+		delete host;
+	}
 	host = new HostSocket(8080);
 }
 
@@ -94,6 +99,11 @@ void User::InitClient(std::string _username)
 	else
 	{
 		mUsername = _username;
+	}
+
+	if (client != nullptr)
+	{
+		delete client;
 	}
 	client = new ClientSocket("", 8080, mUsername);
 }

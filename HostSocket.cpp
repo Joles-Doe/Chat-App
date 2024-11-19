@@ -18,7 +18,7 @@ HostSocket::HostSocket(int _port)
 	//Resolve address and port for server
 	if (getaddrinfo(NULL, std::to_string(_port).c_str(), &hints, &result) != 0)
 	{
-		WSACleanup();
+		//WSACleanup();
 		throw std::runtime_error("Failed to resolve server address or port");
 	}
 
@@ -27,7 +27,7 @@ HostSocket::HostSocket(int _port)
 	if (mSelectedSocket == INVALID_SOCKET)
 	{
 		freeaddrinfo(result);
-		WSACleanup();
+		//WSACleanup();
 		throw std::runtime_error("Failed to create socket");
 	}
 
@@ -36,9 +36,10 @@ HostSocket::HostSocket(int _port)
 	{
 		freeaddrinfo(result);
 		closesocket(mSelectedSocket);
-		WSACleanup();
+		//WSACleanup();
 		throw std::runtime_error("Failed to bind socket");
 	}
+
 	//addrinfo is no longer needed, free the memory
 	freeaddrinfo(result);
 
@@ -46,7 +47,7 @@ HostSocket::HostSocket(int _port)
 	if (listen(mSelectedSocket, SOMAXCONN) == SOCKET_ERROR)
 	{
 		closesocket(mSelectedSocket);
-		WSACleanup();
+		//WSACleanup();
 		throw std::runtime_error("Failed to listen on socket");
 	}
 	//Set to non-blocking mode
