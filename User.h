@@ -19,10 +19,14 @@ public:
 	void InitHost(std::string _username = "");
 	void InitClient(std::string _username = "");
 
-	void Send(std::string &_msg, int _userIterator = -1);
+	void Send(std::string _msg, int _userIterator = -1);
 
 	std::string GetUsername();
 	void SetUsername(std::string _username);
+
+	bool Command(std::string _message, int _clientIterator = -1);
+
+	std::string AddPrefix(std::string _message, int _clientIterator = -1);
 
 	//Host related
 	std::string GetSentMessage();
@@ -36,7 +40,6 @@ private:
 
 	//Host related
 	std::vector<std::shared_ptr<Client>> mClientList;
-	bool Command(std::string _message, int _clientIterator = -1);
 	bool mCommandCalled{ false };
 
 	//Used by both

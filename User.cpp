@@ -38,6 +38,8 @@ void User::Update()
 				mCommandCalled = Command(message, ci);
 				if (mCommandCalled == false)
 				{
+					message.append("\n");
+
 					//Send that message to the other clients
 					Send(message, ci);
 				}				
@@ -108,7 +110,7 @@ void User::InitClient(std::string _username)
 	client = new ClientSocket("", 8080, mUsername);
 }
 
-void User::Send(std::string &_msg, int _userIterator)
+void User::Send(std::string _msg, int _userIterator)
 {
 	if (host != nullptr)
 	{
@@ -134,9 +136,9 @@ void User::Send(std::string &_msg, int _userIterator)
 	}
 	else if (client != nullptr)
 	{
-		std::string rawMessage = _msg;
-		_msg = mUsername + ": " + _msg;
-		client->Send(rawMessage);
+		//_msg = mUsername + ": " + _msg;
+		std::cout << _msg << std::endl;
+		client->Send(_msg);
 	}
 }
 
@@ -173,13 +175,14 @@ bool User::Command(std::string _message, int _clientIterator)
 		if (_message.substr(5, 2) == "cu")
 		{
 			std::cout << "CHANGE USERNAME" << std::endl;
-			if (_clientIterator != -1)
+			if (_clientIterator != -1 && host != nullptr)
 			{
+				std::cout << mClientList.at(_clientIterator)->GetUsername() << std::endl;
 				mClientList.at(_clientIterator)->SetUsername(_message.substr(8));
 			}
 			else
 			{
-				SetUsername(_message.substr(8));
+				SetUsername(_message.substr(8, std::string::npos));
 			}
 		}
 	}
@@ -189,6 +192,11 @@ bool User::Command(std::string _message, int _clientIterator)
 	}
 
 	return true;
+}
+
+std::string User::AddPrefix(std::string _message, int _clientIterator)
+{
+	return std::string();
 }
 
 void User::SendToBuffer(std::string _message)

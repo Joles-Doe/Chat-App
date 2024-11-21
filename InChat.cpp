@@ -36,12 +36,17 @@ void InChat::StaticTextInput(Fl_Widget* _widget, void* _userdata)
 void InChat::TextInput()
 {
 	std::string text;
+
 	text.append(mInput.value());
-	text.append("\n");
 
 	user->Send(text);
 
-	mBuffer.append(text.c_str(), text.size());
+	if (user->Command(text) == false)
+	{
+		text = user->GetUsername() + ": " + text;
+		text.append("\n");
+		mBuffer.append(text.c_str(), text.size());
+	}
 
 	mInput.static_value("");
 }
