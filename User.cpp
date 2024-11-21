@@ -24,31 +24,27 @@ void User::Update()
 		{
 			std::cout << "Client Connected" << std::endl;
 			mClientList.push_back(std::make_shared<Client>(client));
+
+			//Add username, or check if it conflicts with another user
+			std::string username;
+			while (mClientList.back()->GetSocket()->Receive(username))
+			{
+				Command(username, mClientList.size() - 1);
+			}
 		}
 
 		//For each client, check if there's new data
 		for (size_t ci = 0; ci < mClientList.size(); ++ci)
 		{
-			//Check if client has sent a message
 			std::string message;
+
 			while (mClientList.at(ci)->GetSocket()->Receive(message))
 			{
-				std::cout << "Client sent message: " << message.c_str() << std::endl;
-
-				mCommandCalled = Command(message, ci);
-				if (mCommandCalled == false)
+				if (Command(message, ci) == false)
 				{
-					message.append("\n");
-
-					//Send that message to the other clients
 					Send(message, ci);
-				}				
-			}
-
-			if (mCommandCalled == false)
-			{
-				//Send the message to the host's buffer
-				SendToBuffer(message);
+					SendToBuffer(AddPrefix(ci) + message + "\n");
+				}
 			}
 			
 			//Check if client has disconnected
@@ -116,15 +112,7 @@ void User::Send(std::string _msg, int _userIterator)
 	{
 		std::cout << "Send " <<  _userIterator << std::endl;
 
-		//Check if host was sending the message
-		if (_userIterator == -1)
-		{
-			_msg = mUsername + ": " + _msg;
-		}
-		else
-		{
-			_msg = mClientList.at(_userIterator)->GetUsername() + ": " + _msg;
-		}
+		_msg = AddPrefix(_userIterator) + _msg + "\n";
 
 		for (size_t si = 0; si < mClientList.size(); ++si)
 		{
@@ -136,9 +124,37 @@ void User::Send(std::string _msg, int _userIterator)
 	}
 	else if (client != nullptr)
 	{
-		//_msg = mUsername + ": " + _msg;
-		std::cout << _msg << std::endl;
 		client->Send(_msg);
+	}
+}
+
+void User::SendWhisper(std::string _msg, int _userIterator, int _targetUser)
+{
+	if (host != nullptr)
+	{
+		std::cout << "Whisper to " << _targetUser << "from " << _userIterator << std::endl;
+
+		_msg = "[" + AddPrefix(_userIterator) + _msg + "]\n";
+		mClientList.at(_targetUser)->GetSocket()->Send(_msg);
+	}
+}
+
+void User::SendWarning(int _warning, int _targetUser)
+{
+	if (host != nullptr)
+	{
+		std::cout << "Warning to " << _targetUser << "with Warning: " << _warning << std::endl;
+
+		//username
+		if (_warning == 0)
+		{
+			mClientList.at(_targetUser)->GetSocket()->Send("s:/w 0");
+		}
+		//whisper
+		else if (_warning == 1)
+		{
+
+		}
 	}
 }
 
@@ -159,44 +175,78 @@ std::string User::GetSentMessage()
 	return send;
 }
 
+bool User::IsUsernameUnique(std::string _username, int _clientIterator)
+{
+	if(_clientIterator == -1)
+	{
+		
+	}
+	else
+	{
+		
+	}
+
+	return false;
+}
+
 bool User::Command(std::string _message, int _clientIterator)
 {
 	//If received message is a command
-	if (_message.substr(0, 4) == "/cmd")
+	if (_message.substr(0, 6) == "u:/cmd")
 	{
 		std::cout << "COMMAND RECEIVED" << std::endl;
-		/*
-		Commands
-		User Setup
-		Change username
-		*/
-		//Command Change Username
 
-		if (_message.substr(5, 2) == "cu")
+		if (_message.substr(7, 2) == "cu")
 		{
 			std::cout << "CHANGE USERNAME" << std::endl;
 			if (_clientIterator != -1 && host != nullptr)
 			{
 				std::cout << mClientList.at(_clientIterator)->GetUsername() << std::endl;
-				mClientList.at(_clientIterator)->SetUsername(_message.substr(8));
+				if (IsUsernameUnique(_message.substr(10), _clientIterator) == true)
+				{
+					mClientList.at(_clientIterator)->SetUsername(_message.substr(10));
+				}
+				
 			}
 			else
 			{
-				SetUsername(_message.substr(8, std::string::npos));
+				SetUsername(_message.substr(10));
 			}
 		}
+	}
+	//If received message is a whisper
+	else if (_message.substr(0, 4) == "u:/w")
+	{
+
+	}
+	//If received message is a warning
+	else if (_message.substr(0, 4) == "s:/w")
+	{
+
 	}
 	else
 	{
 		return false;
 	}
 
+
+
 	return true;
 }
 
-std::string User::AddPrefix(std::string _message, int _clientIterator)
+std::string User::AddPrefix(int _clientIterator)
 {
-	return std::string();
+	std::string prefix;
+	if (_clientIterator == -1 || host == nullptr)
+	{
+		prefix = mUsername + ": ";
+	}
+	else
+	{
+		prefix = mClientList.at(_clientIterator)->GetUsername() + ": ";
+	}
+
+	return prefix;
 }
 
 void User::SendToBuffer(std::string _message)

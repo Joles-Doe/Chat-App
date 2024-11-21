@@ -39,7 +39,8 @@ void InChat::TextInput()
 
 	text.append(mInput.value());
 
-	user->Send(text);
+	//User messages are prefixed with "u:" in order to prevent accidental admin abuse
+	user->Send("u:" + text);
 
 	if (user->Command(text) == false)
 	{

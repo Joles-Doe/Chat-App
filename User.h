@@ -20,16 +20,21 @@ public:
 	void InitClient(std::string _username = "");
 
 	void Send(std::string _msg, int _userIterator = -1);
+	void SendWhisper(std::string _msg, int _userIterator, int _targetUser);
+	void SendWarning(int _warning, int _targetUser);
 
 	std::string GetUsername();
 	void SetUsername(std::string _username);
 
 	bool Command(std::string _message, int _clientIterator = -1);
 
-	std::string AddPrefix(std::string _message, int _clientIterator = -1);
+	std::string AddPrefix(int _clientIterator = -1);
 
 	//Host related
 	std::string GetSentMessage();
+
+	bool IsUsernameUnique(std::string _username, int _clientIterator = -1);
+
 private:
 	Wsa wsa;
 
