@@ -3,7 +3,7 @@
 MainWindow::MainWindow(std::shared_ptr<User> _user, int _w, int _h)
     : Fl_Window(_w, _h, "TEST"), Timer(1.0f / 60.0f),
     menu(_user, this, 0, 0, _w, _h),
-    chat(_user, 0, 0, _w, _h)
+    chat(_user, this, 0, 0, _w, _h)
 {
     MainWindow::size_range(_w, _h);
     user = _user;
@@ -31,6 +31,7 @@ void MainWindow::Update()
         {
             mStateChanged = false;
             menu.show();
+            user->Reset();
             chat.hide();
         }
         //Call active screen's update function
@@ -41,6 +42,7 @@ void MainWindow::Update()
         {
             mStateChanged = false;
             menu.hide();
+            chat.Reset();
             chat.show();
         }
         chat.Update();

@@ -17,7 +17,8 @@ public:
 	std::string GetUsername();
 	void SetUsername(std::string _username);
 
-	void SetChatColor(int _r, int _b, int _g);
+	void SetChatColor(int _r, int _g, int _b);
+	int GetChatColor(int _colorIndex);
 private:
 	std::shared_ptr<ClientSocket> mClientSocket;
 

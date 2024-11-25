@@ -6,6 +6,8 @@
 
 int main(int argc, char* argv[]) //Ensure main has these parameters
 {
+	srand(time(NULL));
+
 	//Set theming
 	Fl::scheme("gtk+"); //Must be called before any other FLTK function
 

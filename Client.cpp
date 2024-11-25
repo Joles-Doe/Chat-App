@@ -25,3 +25,14 @@ void Client::SetChatColor(int _r, int _g, int _b)
 {
 	mChatColor[0] = _r, mChatColor[1] = _g, mChatColor[2] = _b;
 }
+
+int Client::GetChatColor(int _colorIndex)
+{
+	int color{ 0 };
+	if (_colorIndex > 0 && _colorIndex < 4)
+	{
+		color = mChatColor[_colorIndex];
+	}
+
+	return color;
+}

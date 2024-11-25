@@ -32,6 +32,8 @@ private:
 	std::unique_ptr<Fl_Group> mServerTab;
 	std::unique_ptr<Fl_Group> mClientTab;
 
+	std::string GenerateUsername();
+
 	//Inputs, Buttons and listeners
 	//Username Input 
 	std::unique_ptr<Fl_Input> mServerUsernameInput;

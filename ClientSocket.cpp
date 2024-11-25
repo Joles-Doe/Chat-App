@@ -138,6 +138,6 @@ std::string ClientSocket::WrapInformation(std::string _username)
 		_username = "GUEST";
 	}
 
-	std::string userInformation = "/cmd cu " + _username;
+	std::string userInformation = "c:/s " + _username;
 	return userInformation;
 }

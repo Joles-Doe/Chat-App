@@ -52,6 +52,20 @@ void Menu::ChangeState(int _state)
 	mParentWindow->ChangeState(_state);
 }
 
+std::string Menu::GenerateUsername()
+{
+	char alphabet[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_-";
+	std::string username;
+
+	for (int x = 0; x < (3 + rand() % 10); x++)
+	{
+		username += alphabet[rand() % (sizeof(alphabet) / sizeof(alphabet[0]))];
+	}
+	return username;
+}
+
+/// NOTE TO SELF : ADD USERNAME CHECKING - NO SPACES OR SPECIAL CHARACTERS
+
 //Inputs and Buttons listeners
 
 //Server button
@@ -64,7 +78,7 @@ void Menu::ServerButton()
 {
 	try
 	{
-		user->InitHost(mServerUsernameInput->value());
+		user->InitHost(mServerUsernameInput->size() == 0 ? GenerateUsername() : mServerUsernameInput->value());
 	}
 	catch (const std::runtime_error& e)
 	{
@@ -84,7 +98,7 @@ void Menu::ClientButton()
 {
 	try
 	{
-		user->InitClient(mClientUsernameInput->value());
+		user->InitClient(mClientUsernameInput->size() == 0 ? GenerateUsername() : mClientUsernameInput->value());
 	}
 	catch (const std::runtime_error& e)
 	{
