@@ -6,6 +6,8 @@
 #include <string>
 #include <memory>
 
+#include "Base36Tool.h"
+
 //Server socket object
 
 class HostSocket
@@ -17,9 +19,13 @@ public:
 
 	std::shared_ptr<ClientSocket> accept();
 
+	std::string GetRoomCode();
+
 private:
 	SOCKET mSelectedSocket;
 	HostSocket(const HostSocket& _copy);
 	HostSocket& operator=(const HostSocket& _assign);
+
+	std::string mRoomCode;
 };
 

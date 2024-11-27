@@ -6,10 +6,9 @@ ClientSocket::ClientSocket()
 
 ClientSocket::ClientSocket(std::string _IPaddress, int _port, std::string _username)
 {
-	if (_IPaddress == "")
-	{
-		_IPaddress = "localhost";
-	}
+	_IPaddress = Base36Tool::IntToIP(Base36Tool::Base36ToInt(_IPaddress));
+	mRoomCode = _IPaddress;
+
 	addrinfo *result = NULL, *ptr = NULL, hints;
 
 	ZeroMemory(&hints, sizeof(hints));
@@ -20,7 +19,7 @@ ClientSocket::ClientSocket(std::string _IPaddress, int _port, std::string _usern
 
 	if (getaddrinfo(_IPaddress.c_str(), std::to_string(_port).c_str(), &hints, &result) != 0)
 	{
-		throw std::runtime_error("Failed to find address. Did you type it in correctly?");
+		throw std::runtime_error("Failed to find server. Did you type it in correctly?");
 	}
 
 	//Attempt to connect to the first address
@@ -129,6 +128,11 @@ void ClientSocket::SetSocket(SOCKET _socket)
 bool ClientSocket::GetClosed()
 {
 	return mClosed;
+}
+
+std::string ClientSocket::GetRoomCode()
+{
+	return mRoomCode;
 }
 
 std::string ClientSocket::WrapInformation(std::string _username)

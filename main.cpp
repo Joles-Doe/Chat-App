@@ -9,7 +9,7 @@ int main(int argc, char* argv[]) //Ensure main has these parameters
 	srand(time(NULL));
 
 	//Set theming
-	Fl::scheme("gtk+"); //Must be called before any other FLTK function
+	Fl::scheme("plastic"); //Must be called before any other FLTK function
 
 	//Initialize user
 	std::shared_ptr<User> user = std::make_shared<User>();
@@ -21,8 +21,4 @@ int main(int argc, char* argv[]) //Ensure main has these parameters
 	win->show(argc, argv); //For the first win.show function, pass argc and argv as parameters
 
 	return Fl::run(); //Must be called at the end of main()
-
-	/// NOTE TO SELF
-	/// CHARACTER LIMIT IS 125 CHARACTERS, ENSURE CHAT IS LIMITED TO 125
-	/// USERNAME 10 CHAR, CHAT MESSAGE 115
 }

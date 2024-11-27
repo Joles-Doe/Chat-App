@@ -5,7 +5,7 @@ MainWindow::MainWindow(std::shared_ptr<User> _user, int _w, int _h)
     menu(_user, this, 0, 0, _w, _h),
     chat(_user, this, 0, 0, _w, _h)
 {
-    MainWindow::size_range(_w, _h);
+    //MainWindow::size_range(_w, _h);
     user = _user;
 
     menu.show();
@@ -43,6 +43,8 @@ void MainWindow::Update()
             mStateChanged = false;
             menu.hide();
             chat.Reset();
+            std::cout << user->GetRoomCode() << std::endl;
+            chat.SetRoomCodeLabel(user->GetRoomCode());
             chat.show();
         }
         chat.Update();

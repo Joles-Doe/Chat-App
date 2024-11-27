@@ -85,42 +85,32 @@ void User::Update()
 	}
 }
 
-void User::InitHost(std::string _username)
+void User::InitHost(std::string _username, int _serverSize)
 {
-	if (_username == "")
-	{
-		mUsername = "HOST";
-	}
-	else
-	{
-		mUsername = _username;
-	}
+	mUsername = _username;
 
 	if (host != nullptr)
 	{
 		delete host;
 	}
 	host = new HostSocket(8080);
+	mServerSize = _serverSize;
+	mRoomCode = host->GetRoomCode();
+	std::cout << mRoomCode << std::endl;
 	mIsHost = true;
 }
 
-void User::InitClient(std::string _username)
+void User::InitClient(std::string _username, std::string _target)
 {
-	if (_username == "")
-	{
-		mUsername = "GUEST";
-	}
-	else
-	{
-		mUsername = _username;
-	}
+	mUsername = _username;
 
 	if (client != nullptr)
 	{
 		delete client;
 	}
 	mIsHost = false;
-	client = new ClientSocket("", 8080, mUsername);
+	client = new ClientSocket(_target, 8080, mUsername);
+	mRoomCode = _target;
 }
 
 void User::Send(std::string _msg, int _userIterator)
@@ -306,6 +296,11 @@ bool User::IsUsernameUnique(std::string _username, int _clientIterator)
 	return true;
 }
 
+std::string User::GetRoomCode()
+{
+	return mRoomCode;
+}
+
 bool User::Command(std::string _message, int _clientIterator)
 {
 	//If received message is a command
@@ -317,35 +312,6 @@ bool User::Command(std::string _message, int _clientIterator)
 		if (_message.substr(7, 2) == "cu")
 		{
 			std::cout << "CHANGE USERNAME" << std::endl;
-			////If user is not host
-			//if (_clientIterator != -1 && host != nullptr)
-			//{
-			//	if (IsUsernameValid(_message.substr(10), _clientIterator) == true)
-			//	{
-			//		std::string systemMessage = "{SYSTEM}: " + mClientList.at(_clientIterator)->GetUsername() + " Has changed their username to: " + _message.substr(10);
-			//		SendToBuffer(systemMessage);
-			//		mClientList.at(_clientIterator)->SetUsername(_message.substr(10));
-			//		Send(systemMessage);
-			//	}
-			//	else
-			//	{
-			//		SendWarning(INVALIDUSERNAME, _clientIterator);
-			//	}
-			//}
-			//else
-			//{
-			//	if (IsUsernameValid(_message.substr(10)) == true)
-			//	{
-			//		std::string systemMessage = "{SYSTEM}: " + mUsername + " Has changed their username to: " + _message.substr(10);
-			//		SendToBuffer(systemMessage);
-			//		SetUsername(_message.substr(10));
-			//		Send(systemMessage);
-			//	}
-			//	else
-			//	{
-			//		SendWarning(INVALIDUSERNAME, _clientIterator);
-			//	}
-			//}
 
 			if (host != nullptr)
 			{
@@ -484,11 +450,18 @@ bool User::Command(std::string _message, int _clientIterator)
 		{
 			if (IsUsernameValid(_message.substr(5), _clientIterator) == false)
 			{
-				SendCustom("s:/r q", _clientIterator);
+				SendCustom("s:/r q1", _clientIterator);
+				mClientList.pop_back();
 			}
 			else
 			{
 				mClientList.at(_clientIterator)->SetUsername(_message.substr(5));
+			}
+
+			if (mClientList.size() == mServerSize)
+			{
+				SendCustom("s:/r q2", _clientIterator);
+				mClientList.pop_back();
 			}
 		}
 	}
@@ -503,9 +476,13 @@ bool User::Command(std::string _message, int _clientIterator)
 		{
 			mServerResponse = ACCEPT;
 		}
-		else if (_message.substr(5, 1) == "q")
+		else if (_message.substr(5, 2) == "q1")
 		{
-			mServerResponse = QUIT;
+			mServerResponse = QUITINVALID;
+		}
+		else if (_message.substr(5, 2) == "q2")
+		{
+			mServerResponse = QUITFULL;
 		}
 	}
 	else

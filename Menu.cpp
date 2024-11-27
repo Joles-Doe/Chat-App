@@ -2,40 +2,69 @@
 #include "MainWindow.h"
 
 Menu::Menu(std::shared_ptr<User> _user, MainWindow* _parent, int _x, int _y, int _w, int _h)
-	: Fl_Window(_x, _y, _w, _h),
+	: Fl_Double_Window(_x, _y, _w, _h),
 	mParentWindow(_parent)
 {
 	user = _user;
 
-	mMenuTabs = std::make_unique<Fl_Tabs>(0, 50, _w, _h, "LABEL");
+	mTitle = std::make_unique<Fl_Box>(0, 0, _w, 125, "FLTK CHAT APPLICATION");
+	mTitle->labelsize(40);
+
+	mClock = std::make_unique<Fl_Clock>((_w / 2) + 50, 140, 300, 300);
+
+	mInputLabel = std::make_unique<Fl_Box>(25, 140, _w / 2, 75, "USERNAME");
+	mInputLabel->labelsize(26);
+
+	mUsernameInput = std::make_unique<Fl_Input>(mInputLabel->w() / 2 - 75, 220, 200, 40);
+	mUsernameInput->textsize(20);
+	mUsernameInput->maximum_size(10);
+
+	mServerButton = std::make_unique<Fl_Button>(25, 300, mInputLabel->w() / 2 - 25, 100, "HOST");
+	mServerButton->labelsize(20);
+	mServerButton->callback(StaticServerButton, (void*)this);
+
+	mClientButton = std::make_unique<Fl_Button>(mInputLabel->w() / 2 + 50, 300, mInputLabel->w() / 2 - 25, 100, "CLIENT");
+	mClientButton->labelsize(20);
+	mClientButton->callback(StaticClientButton, (void*)this);
+
+	mContent = std::make_unique<Fl_Wizard>(0, 480, _w, _h - 480);
 	{
-		mServerTab = std::make_unique<Fl_Group>(10, 70, _w - 20, _h - 20, "Server");
+		mServerSettings = std::make_unique<Fl_Group>(0, 480, _w, _h - 480);
 		{
-			mServerUsernameInput = std::make_unique<Fl_Input>(100, 400, 75, 25, "Username: ");
-			mServerUsernameInput->maximum_size(10);
+			mServerSizeLabel = std::make_unique<Fl_Box>(75, 550, 300, 60, "Server Size");
+			mServerSizeLabel->labelsize(26);
 
-			mServerButton = std::make_unique<Fl_Button>(100, 100, 200, 100, "SERVER");
-			mServerButton->callback(StaticServerButton, (void*)this);
+			mServerSize = std::make_unique<Fl_Slider>(75, 610, 300, 50);
+			mServerSize->value(2);
+			mServerSize->bounds(2, 15);
+			mServerSize->type(FL_HORIZONTAL);
+			mServerSize->labelsize(20);
+			mServerSize->callback(StaticUpdateSlider, (void*)this);
+			mServerSize->when(FL_WHEN_CHANGED);
+
+			mSizeOutput = std::make_unique<Fl_Output>(60 + mServerSize->w() / 2, 660, 30, 30);
+			mSizeOutput->textsize(20);
+			mSizeOutput->value("2");
+
 		}
-		mServerTab->end();
+		mServerSettings->end();
 
-		mClientTab = std::make_unique<Fl_Group>(10, 70, _w - 20, _h - 20, "Client");
+		mClientSettings = std::make_unique<Fl_Group>(0, 480, _w, _h - 480);
 		{
-			// >:(
-			mClientUsernameInput = std::make_unique<Fl_Input>(
-				mServerUsernameInput->x(),
-				mServerUsernameInput->y(),
-				mServerUsernameInput->w(),
-				mServerUsernameInput->h(),
-				mServerUsernameInput->label());
-			mClientUsernameInput->maximum_size(10);
+			mClientTargetLabel = std::make_unique<Fl_Box>(75, 550, 300, 60, "Server ID");
+			mClientTargetLabel->labelsize(26);
 
-			mClientButton = std::make_unique<Fl_Button>(100, 100, 200, 100, "CLIENT");
-			mClientButton->callback(StaticClientButton, (void*)this);
+			mClientTarget = std::make_unique<Fl_Input>(75, 610, 300, 40);
+			mClientTarget->textsize(20);
 		}
-		mClientTab->end();
+		mClientSettings->end();
 	}
-	mMenuTabs->end();
+	mContent->end();
+
+	mStartButton = std::make_unique<Fl_Button>(((_w / 2) + 50) + mClock->w() / 6, 550, 200, 200, "START");
+	mStartButton->labelsize(28);
+	mStartButton->callback(StaticStartButton, (void*)this);
+
 	end();
 }
 
@@ -45,11 +74,6 @@ Menu::~Menu()
 
 void Menu::Update()
 {
-}
-
-void Menu::ChangeState(int _state)
-{
-	mParentWindow->ChangeState(_state);
 }
 
 std::string Menu::GenerateUsername()
@@ -64,10 +88,6 @@ std::string Menu::GenerateUsername()
 	return username;
 }
 
-/// NOTE TO SELF : ADD USERNAME CHECKING - NO SPACES OR SPECIAL CHARACTERS
-
-//Inputs and Buttons listeners
-
 //Server button
 void Menu::StaticServerButton(Fl_Widget* w, void* _userdata)
 {
@@ -76,16 +96,7 @@ void Menu::StaticServerButton(Fl_Widget* w, void* _userdata)
 }
 void Menu::ServerButton()
 {
-	try
-	{
-		user->InitHost(mServerUsernameInput->size() == 0 ? GenerateUsername() : mServerUsernameInput->value());
-	}
-	catch (const std::runtime_error& e)
-	{
-		fl_alert(e.what());
-		return;
-	}
-	ChangeState(1);
+	mContent->prev();
 }
 
 //Client button
@@ -96,14 +107,55 @@ void Menu::StaticClientButton(Fl_Widget* w, void* _userdata)
 }
 void Menu::ClientButton()
 {
+	mContent->next();
+}
+
+//Slider update
+void Menu::StaticUpdateSlider(Fl_Widget* w, void* _userdata)
+{
+	Menu* listenerFunction = (Menu*)_userdata;
+	listenerFunction->UpdateSlider();
+}
+void Menu::UpdateSlider()
+{
+	char buffer[3]{ 0 };
+	sprintf_s(buffer, "%d", (int)mServerSize->value());
+	mSizeOutput->value(buffer);
+}
+
+//Start button
+void Menu::StaticStartButton(Fl_Widget* w, void* _userdata)
+{
+	Menu* listenerFunction = (Menu*)_userdata;
+	listenerFunction->StartButton();
+}
+void Menu::StartButton()
+{
+	std::string username;
+	if (mUsernameInput->size() == 0)
+	{
+		username = GenerateUsername();
+	}
+	else
+	{
+		username = mUsernameInput->value();
+	}
+
 	try
 	{
-		user->InitClient(mClientUsernameInput->size() == 0 ? GenerateUsername() : mClientUsernameInput->value());
+		if (mContent->value() == mServerSettings.get())
+		{
+			user->InitHost(username, mServerSize->value());
+		}
+		else if (mContent->value() == mClientSettings.get())
+		{
+			user->InitClient(username, mClientTarget->value());
+		}
 	}
 	catch (const std::runtime_error& e)
 	{
 		fl_alert(e.what());
 		return;
 	}
-	ChangeState(1);
+	mParentWindow->ChangeState(1);
 }

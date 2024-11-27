@@ -21,7 +21,8 @@ enum Response
 	WAITING,
 	REJECT,
 	ACCEPT,
-	QUIT
+	QUITINVALID,
+	QUITFULL
 };
 
 class User
@@ -32,8 +33,8 @@ public:
 
 	void Update();
 
-	void InitHost(std::string _username = "");
-	void InitClient(std::string _username = "");
+	void InitHost(std::string _username, int _serverSize);
+	void InitClient(std::string _username, std::string _target);
 
 	void Send(std::string _msg, int _userIterator = -1);
 	void SendWhisper(std::string _msg, int _userIterator, int _targetUser);
@@ -61,6 +62,8 @@ public:
 	bool IsUsernameValid(std::string _username, int _clientIterator = -1);
 	bool IsUsernameUnique(std::string _username, int _clientIterator = -1);
 
+	std::string GetRoomCode();
+
 private:
 	Wsa wsa;
 
@@ -78,6 +81,9 @@ private:
 	//Host related
 	std::vector<std::shared_ptr<Client>> mClientList;
 	bool mCommandCalled{ false };
+
+	std::string mRoomCode;
+	int mServerSize{ 0 };
 
 	//Used by both
 	void SendToBuffer(std::string _message);

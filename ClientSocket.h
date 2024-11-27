@@ -5,6 +5,8 @@
 #include <stdexcept>
 #include <iostream>
 
+#include "Base36Tool.h"
+
 class HostSocket;
 
 class ClientSocket
@@ -21,6 +23,7 @@ public:
 
 	bool GetClosed();
 
+	std::string GetRoomCode();
 private:
 	friend class HostSocket;
 
@@ -28,6 +31,8 @@ private:
 	bool mClosed{ false };
 	
 	std::string WrapInformation(std::string _username);
+
+	std::string mRoomCode;
 
 	ClientSocket(const ClientSocket& _copy);
 	ClientSocket& operator=(const ClientSocket& _assign);
