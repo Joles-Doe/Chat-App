@@ -42,7 +42,8 @@ Menu::Menu(std::shared_ptr<User> _user, MainWindow* _parent, int _x, int _y, int
 			mServerSize->callback(StaticUpdateSlider, (void*)this);
 			mServerSize->when(FL_WHEN_CHANGED);
 
-			mSizeOutput = std::make_unique<Fl_Output>(60 + mServerSize->w() / 2, 660, 30, 30);
+			mSizeOutput = std::make_unique<Fl_Centered_Output>(60 + mServerSize->w() / 2, 660, 30, 30);
+			mSizeOutput->color(FL_BACKGROUND_COLOR);
 			mSizeOutput->textsize(20);
 			mSizeOutput->value("2");
 
@@ -139,6 +140,12 @@ void Menu::StartButton()
 	else
 	{
 		username = mUsernameInput->value();
+	}
+
+	if (user->IsUsernameValid(username) == false)
+	{
+		fl_alert("Invalid username! Please ensure your username contains no special characters.");
+		return;
 	}
 
 	try

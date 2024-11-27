@@ -24,6 +24,8 @@ class InChat : public Fl_Double_Window
 public:
 	InChat(std::shared_ptr<User> _user, MainWindow* _parent, int _x, int _y, int _w, int _h);
 
+	int handle(int event) override;
+
 	void Update();
 
 	void SetRoomCodeLabel(std::string _label);
@@ -33,7 +35,7 @@ private:
 	MainWindow* mParentWindow;
 	std::shared_ptr<User> user;
 
-	std::unique_ptr<Fl_Output> mRoomCodeLabel;
+	std::unique_ptr<Fl_Centered_Output> mRoomCodeLabel;
 	std::unique_ptr<Fl_Box> mTitleBar;
 	std::unique_ptr<Fl_Button> mQuitButton;
 	static void StaticQuit(Fl_Widget* _widget, void* _userdata);
@@ -42,10 +44,10 @@ private:
 	std::unique_ptr<Fl_Text_Buffer> mBuffer;
 	std::unique_ptr<Fl_Text_Display> mDisplay;
 
-	//Buttons and listeners
-	//Input button
 	std::unique_ptr<Fl_Input> mInput;
 	static void StaticTextInput(Fl_Widget* _widget, void* _userdata);
 	void TextInput();
+
+	std::unique_ptr<Fl_Button> mSendButton;
 };
 

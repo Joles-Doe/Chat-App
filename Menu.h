@@ -14,6 +14,7 @@
 #include <FL/Fl_Clock.H>
 #include <FL/Fl_Wizard.H>
 #include <FL/Fl_Output.h>
+#include "Fl_Centered_Output.h"
 #include <FL/Fl_Light_Button.H>
 
 #include <memory>
@@ -64,7 +65,7 @@ private:
 	void UpdateSlider();
 	std::unique_ptr<Fl_Box> mServerSizeLabel;
 	std::unique_ptr<Fl_Slider> mServerSize;
-	std::unique_ptr<Fl_Output> mSizeOutput;
+	std::unique_ptr<Fl_Centered_Output> mSizeOutput;
 
 	std::unique_ptr<Fl_Box> mClientTargetLabel;
 	std::unique_ptr<Fl_Input> mClientTarget;

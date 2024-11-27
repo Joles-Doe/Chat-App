@@ -3,7 +3,7 @@
 void Fl_Centered_Output::draw()
 {
 	//Draw widget background
-	fl_color(FL_WHITE);
+	fl_color(Fl_Output::color());
 	fl_rectf(x(), y(), w(), h());
 
 	//Grab text stored within widget
@@ -12,9 +12,9 @@ void Fl_Centered_Output::draw()
 	if (text && *text)
 	{ 
 		//Grab text font and size
-		fl_font(textfont(), textsize());
+		fl_font(Fl_Output::textfont(), Fl_Output::textsize());
 		//Set text color
-		fl_color(textcolor());
+		fl_color(Fl_Output::textcolor());
 
 		//Find dimensions of text
 		int textW = fl_width(text);
@@ -25,20 +25,12 @@ void Fl_Centered_Output::draw()
 		//Calculate the text baseline
 		int textY = y() + ((h() + (textH / 2)) / 2);
 
-		if ((mSelectStart != -1) && (mSelectEnd != -1) && (mSelectStart != mSelectEnd))
-		{
-			Fl_Color(FL_BLUE);
-			
-			std::string selectionText = text;
-
-			int startX = x() + fl_width(selectionText.substr(0, mSelectStart).c_str());
-			int endX = x() + fl_width(selectionText.substr(mSelectStart, mSelectEnd).c_str());
-
-			fl_rectf(startX, y(), endX - startX, h());
-		}
-
-
 		//Draw text
 		fl_draw(text, textX, textY);
 	}
+}
+
+int Fl_Centered_Output::handle(int event)
+{
+	return 0;
 }
