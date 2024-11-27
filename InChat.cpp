@@ -7,8 +7,9 @@ InChat::InChat(std::shared_ptr<User> _user, MainWindow* _parent, int _x, int _y,
 {
 	user = _user;
 
-	mRoomCodeLabel = std::make_unique<Fl_Output>(0, 0, 100, 100);
-	mRoomCodeLabel->textsize(25);
+	mRoomCodeLabel = std::make_unique<Fl_Output>(50, 0, 75, 100);
+	mRoomCodeLabel->color(FL_WHITE);
+	mRoomCodeLabel->textsize(30);
 	//mTitleBar = std::make_unique<Fl_Box>(100, 0, _w - 250, 100);
 	mQuitButton = std::make_unique<Fl_Button>(_w - 150, 0, 150, 100, "QUIT");
 	mQuitButton->labelsize(25);

@@ -137,6 +137,7 @@
     <ClCompile Include="Base36Tool.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="ClientSocket.cpp" />
+    <ClCompile Include="Fl_Centered_Output.cpp" />
     <ClCompile Include="HostSocket.cpp" />
     <ClCompile Include="InChat.cpp" />
     <ClCompile Include="main.cpp" />
@@ -150,6 +151,7 @@
     <ClInclude Include="Base36Tool.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="ClientSocket.h" />
+    <ClInclude Include="Fl_Centered_Output.h" />
     <ClInclude Include="HostSocket.h" />
     <ClInclude Include="InChat.h" />
     <ClInclude Include="MainWindow.h" />

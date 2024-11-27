@@ -48,6 +48,9 @@
     <ClCompile Include="Base36Tool.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Fl_Centered_Output.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Wsa.h">
@@ -78,6 +81,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Base36Tool.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Fl_Centered_Output.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
