@@ -5,6 +5,12 @@
 #include <sstream>
 #include <cctype>
 
+/*
+  Static struct created to convert IP addresses into a Base36 string.
+
+  Assumes that IP addresses are in IPV4 format, and that they're valid.
+  No error checking is present here as this tool is a simple A to B translation process.
+*/
 struct Base36Tool
 {
 	//Convert an integer to an IP address

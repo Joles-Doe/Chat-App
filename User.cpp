@@ -14,12 +14,12 @@ User::~User()
 
 void User::Update()
 {
-	if (host != nullptr)
+	if (host != nullptr && mServerOpen == true)
 	{
 		mCommandCalled = false;
 
 		//Check if someone new has joined
-		std::shared_ptr<ClientSocket> client = host->accept();
+		std::shared_ptr<ClientSocket> client = host->Accept();
 		if (client)
 		{
 			std::cout << "Client Connected" << std::endl;
@@ -70,7 +70,6 @@ void User::Update()
 				--ci;
 			}
 		}
-		//std::cout << "Tick" << std::endl;
 	}
 	else if (client != nullptr)
 	{
@@ -92,12 +91,14 @@ void User::InitHost(std::string _username, int _serverSize)
 	if (host != nullptr)
 	{
 		delete host;
+		host = NULL;
 	}
 	host = new HostSocket(8080);
 	mServerSize = _serverSize;
 	mRoomCode = host->GetRoomCode();
 	std::cout << mRoomCode << std::endl;
 	mIsHost = true;
+	mServerOpen = true;
 }
 
 void User::InitClient(std::string _username, std::string _target)
@@ -130,13 +131,29 @@ void User::Send(std::string _msg, int _userIterator)
 		{
 			if (si != _userIterator)
 			{
-				mClientList.at(si)->GetSocket()->Send(_msg);
+				try
+				{
+					mClientList.at(si)->GetSocket()->Send(_msg);
+				}
+				catch (std::runtime_error& e)
+				{
+					mClientList.erase(mClientList.begin() + si);
+					--si;
+				}
 			}
 		}
 	}
 	else if (client != nullptr)
 	{
-		client->Send(_msg);
+		try
+		{
+			client->Send(_msg);
+		}
+		catch (std::runtime_error& e)
+		{
+			mServerResponse = DISCONNECT;
+		}
+		
 	}
 }
 
@@ -496,6 +513,18 @@ bool User::Command(std::string _message, int _clientIterator)
 void User::Reset()
 {
 	mServerResponse = WAITING;
+
+	if (host != nullptr)
+	{
+		mServerOpen = false;
+
+		delete host;
+		host = NULL;
+	}
+	if (client != nullptr)
+	{
+		client->Close();
+	}
 }
 
 int User::GetServerResponse()

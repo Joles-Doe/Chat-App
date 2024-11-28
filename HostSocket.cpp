@@ -1,9 +1,5 @@
 #include "HostSocket.h"
 
-HostSocket::HostSocket()
-{
-}
-
 HostSocket::HostSocket(int _port)
 	: mSelectedSocket(INVALID_SOCKET)
 {
@@ -18,7 +14,6 @@ HostSocket::HostSocket(int _port)
 	//Resolve address and port for server
 	if (getaddrinfo("localhost", std::to_string(_port).c_str(), &hints, &result) != 0)
 	{
-		//WSACleanup();
 		throw std::runtime_error("Failed to resolve server address or port");
 	}
 
@@ -27,7 +22,6 @@ HostSocket::HostSocket(int _port)
 	if (mSelectedSocket == INVALID_SOCKET)
 	{
 		freeaddrinfo(result);
-		//WSACleanup();
 		throw std::runtime_error("Failed to create socket");
 	}
 
@@ -36,7 +30,6 @@ HostSocket::HostSocket(int _port)
 	{
 		freeaddrinfo(result);
 		closesocket(mSelectedSocket);
-		//WSACleanup();
 		throw std::runtime_error("Failed to bind socket");
 	}
 
@@ -60,11 +53,10 @@ HostSocket::HostSocket(int _port)
 	}
 
 	std::string IP = ipStr;
-	std::cout << "Local IP Address: " << IP << std::endl;
-
+	//std::cout << "Local IP Address: " << IP << std::endl;
 	mRoomCode = Base36Tool::IntToBase36(Base36Tool::IPToInt(IP));
-	std::cout << "Room Code: " << mRoomCode << std::endl;
-	std::cout << "Decrypted: " << Base36Tool::IntToIP(Base36Tool::Base36ToInt(mRoomCode)) << std::endl;
+	//std::cout << "Room Code: " << mRoomCode << std::endl;
+	//std::cout << "Decrypted: " << Base36Tool::IntToIP(Base36Tool::Base36ToInt(mRoomCode)) << std::endl;
 
 	//addrinfo is no longer needed, free the memory
 	freeaddrinfo(result);
@@ -73,7 +65,6 @@ HostSocket::HostSocket(int _port)
 	if (listen(mSelectedSocket, SOMAXCONN) == SOCKET_ERROR)
 	{
 		closesocket(mSelectedSocket);
-		//WSACleanup();
 		throw std::runtime_error("Failed to listen on socket");
 	}
 	//Set to non-blocking mode
@@ -88,9 +79,12 @@ HostSocket::~HostSocket()
 	closesocket(mSelectedSocket);
 }
 
-std::shared_ptr<ClientSocket> HostSocket::accept()
+std::shared_ptr<ClientSocket> HostSocket::Accept()
 {
+	//Attempt to accept an incoming connection
 	SOCKET socket = ::accept(mSelectedSocket, NULL, NULL);
+
+	//If no connections are present
 	if (socket == INVALID_SOCKET)
 	{
 		if (WSAGetLastError() != WSAEWOULDBLOCK)
@@ -99,34 +93,22 @@ std::shared_ptr<ClientSocket> HostSocket::accept()
 		}
 		return std::shared_ptr<ClientSocket>();
 	}
+
+	//Create a client socket and return it
 	std::shared_ptr<ClientSocket> rtn = std::make_shared<ClientSocket>();
 	rtn->SetSocket(socket);
 	return rtn;
 }
 
+void HostSocket::Close()
+{
+	if (mSelectedSocket != INVALID_SOCKET)
+	{
+		closesocket(mSelectedSocket);
+	}
+}
+
 std::string HostSocket::GetRoomCode()
 {
-	/*char hostName[256]{ 0 };
-
-	if (gethostname(hostName, sizeof(hostName)) == SOCKET_ERROR) 
-	{
-		throw std::runtime_error("Failed to get Host Name");
-	}
-
-	struct hostent* host = gethostbyname(hostName);
-
-	if (host == nullptr) 
-	{
-		throw std::runtime_error("Failed to get Host Name");
-	}
-
-	struct in_addr* addr = (struct in_addr*)host->h_addr_list[0];
-
-	std::string IP = inet_ntoa(*addr);
-	std::cout << inet_ntoa(*addr) << std::endl;
-
-	std::string roomCode = Base36Tool::IntToBase36(Base36Tool::IPToInt(IP));
-	std::cout << roomCode << std::endl;*/
-
 	return mRoomCode;
 }

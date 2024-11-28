@@ -22,6 +22,7 @@ public:
 	void SetSocket(SOCKET _socket);
 
 	bool GetClosed();
+	void Close();
 
 	std::string GetRoomCode();
 private:

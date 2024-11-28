@@ -1,24 +1,31 @@
 #pragma once
 #include "Wsa.h"
 #include "ClientSocket.h"
+#include "Base36Tool.h"
 #include <ws2tcpip.h>
 #include <stdexcept>
 #include <string>
 #include <memory>
 
-#include "Base36Tool.h"
+/*
+  Socket class responsible for server-side data handling.
 
-//Server socket object
-
+  Upon construction, opens a socket in the port specified.
+  Operates in non-blocking format.
+*/
 class HostSocket
 {
 public:
-	HostSocket();
 	HostSocket(int _port);
 	~HostSocket();
 
-	std::shared_ptr<ClientSocket> accept();
+	//Attempts to accept an incoming connection, returns a client socket if true, or an empty client socket
+	std::shared_ptr<ClientSocket> Accept();
 
+	//Closes socket - queues incoming data
+	void Close();
+
+	//Returns created Room Code
 	std::string GetRoomCode();
 
 private:

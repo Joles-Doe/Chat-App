@@ -7,14 +7,18 @@ InChat::InChat(std::shared_ptr<User> _user, MainWindow* _parent, int _x, int _y,
 {
 	user = _user;
 
+	//Header
 	mRoomCodeLabel = std::make_unique<Fl_Centered_Output>(50, 0, 75, 100);
 	mRoomCodeLabel->color(FL_WHITE);
 	mRoomCodeLabel->textsize(30);
+
 	//mTitleBar = std::make_unique<Fl_Box>(100, 0, _w - 250, 100);
+
 	mQuitButton = std::make_unique<Fl_Button>(_w - 150, 0, 150, 100, "QUIT");
 	mQuitButton->labelsize(25);
 	mQuitButton->callback(StaticQuit, (void*)this);
 
+	//Body
 	mBuffer = std::make_unique<Fl_Text_Buffer>();
 
 	mDisplay = std::make_unique<Fl_Text_Display>(0, 100, _w, _h - 200);
@@ -22,6 +26,7 @@ InChat::InChat(std::shared_ptr<User> _user, MainWindow* _parent, int _x, int _y,
 	mDisplay->wrap_mode(Fl_Text_Display::WRAP_AT_BOUNDS, 10);
 	mDisplay->textsize(20);
 
+	//Footer
 	mInput = std::make_unique<Fl_Input>(0, _h - 100, _w - 150, 100);
 	mInput->when(FL_WHEN_ENTER_KEY);
 	mInput->maximum_size(80);
@@ -33,6 +38,8 @@ InChat::InChat(std::shared_ptr<User> _user, MainWindow* _parent, int _x, int _y,
 	mSendButton->callback(StaticTextInput, (void*)this);
 
 	end();
+
+	//Hide the window, not used by default
 	hide();
 }
 
@@ -72,6 +79,11 @@ void InChat::Update()
 	{
 		mParentWindow->ChangeState(0);
 		fl_alert("Rejected from server:\n Server is full.");
+	}
+	else if (user->GetServerResponse() == DISCONNECT)
+	{
+		mParentWindow->ChangeState(0);
+		fl_alert("Disconnected from server:\n Server closed.");
 	}
 }
 

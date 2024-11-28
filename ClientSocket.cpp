@@ -109,6 +109,9 @@ bool ClientSocket::Receive(std::string& _message)
 void ClientSocket::Send(const std::string& _message)
 {
 	int bytes = send(mSelectedSocket, _message.c_str(), _message.length(), 0);
+
+	std::cout << bytes << std::endl;
+
 	if (bytes <= 0)
 	{
 		throw std::runtime_error("Failed to send data");
@@ -128,6 +131,14 @@ void ClientSocket::SetSocket(SOCKET _socket)
 bool ClientSocket::GetClosed()
 {
 	return mClosed;
+}
+
+void ClientSocket::Close()
+{
+	if (mSelectedSocket != INVALID_SOCKET)
+	{
+		closesocket(mSelectedSocket);
+	}
 }
 
 std::string ClientSocket::GetRoomCode()

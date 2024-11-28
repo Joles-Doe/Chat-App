@@ -22,7 +22,8 @@ enum Response
 	REJECT,
 	ACCEPT,
 	QUITINVALID,
-	QUITFULL
+	QUITFULL,
+	DISCONNECT
 };
 
 class User
@@ -71,6 +72,7 @@ private:
 	ClientSocket* client{ nullptr };
 
 	bool mIsHost{ false };
+	bool mServerOpen{ false };
 
 	std::string mUsername;
 
