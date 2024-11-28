@@ -1,7 +1,9 @@
 #pragma once
 #include <WinSock2.h>
 
-// Winsocket data container
+/*
+  Struct used to automatically construct and destruct the WSA library
+*/
 struct Wsa
 {
 	Wsa();

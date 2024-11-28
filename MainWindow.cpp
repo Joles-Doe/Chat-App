@@ -3,7 +3,8 @@
 MainWindow::MainWindow(std::shared_ptr<User> _user, int _w, int _h)
     : Fl_Window(_w, _h, "TEST"), Timer(1.0f / 60.0f),
     menu(_user, this, 0, 0, _w, _h),
-    chat(_user, this, 0, 0, _w, _h)
+    chat(_user, this, 0, 0, _w, _h),
+    mChatVersion("Version 1.0.0")
 {
     //MainWindow::size_range(_w, _h);
     user = _user;

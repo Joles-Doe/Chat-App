@@ -22,6 +22,11 @@
 
 class MainWindow;
 
+/*
+  Class used to categorise widgets and logic into one place.
+
+  Menu represents the menu window, where users can choose to create or join a server.
+*/
 class Menu : public Fl_Double_Window
 {
 public:

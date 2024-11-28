@@ -133,7 +133,7 @@ void InChat::TextInput()
 		bool sendMessage{ false };
 
 		//If the message isn't a command
-		if (isCommand == false)
+		if (isCommand == false && (text != "/help"))
 		{
 			//Append the message to the user's buffer
 			std::string bufferText = user->GetUsername() + ": " + text;

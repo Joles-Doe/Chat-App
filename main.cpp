@@ -12,7 +12,7 @@ int main(int argc, char* argv[]) //Ensure main has these parameters
 	Fl::scheme("plastic"); //Must be called before any other FLTK function
 
 	//Initialize user
-	std::shared_ptr<User> user = std::make_shared<User>();
+	std::shared_ptr<User> user = std::make_shared<User>("Version 1.0.0");
 
 	//Initialize window
 	std::shared_ptr<MainWindow> win = std::make_shared<MainWindow>(user, 800, 800);

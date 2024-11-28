@@ -42,6 +42,8 @@ private:
     bool mStateChanged{ false };
     int mState{ 0 };
 
+    std::string mChatVersion;
+
     Menu menu;
     InChat chat;
 };

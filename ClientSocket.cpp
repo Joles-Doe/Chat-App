@@ -71,7 +71,7 @@ ClientSocket::ClientSocket(std::string _IPaddress, int _port, std::string _usern
 		//WSACleanup();
 		throw std::runtime_error("Failed to connect. Try again later.");
 	}
-	std::cout << "Sent bytes" << std::endl;
+	//std::cout << "Sent bytes" << std::endl;
 }
 
 ClientSocket::~ClientSocket()
@@ -110,7 +110,7 @@ void ClientSocket::Send(const std::string& _message)
 {
 	int bytes = send(mSelectedSocket, _message.c_str(), _message.length(), 0);
 
-	std::cout << bytes << std::endl;
+	//std::cout << bytes << std::endl;
 
 	if (bytes <= 0)
 	{
