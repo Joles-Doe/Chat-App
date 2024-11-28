@@ -30,47 +30,61 @@ public:
 
 	void Update();
 
-	void ChangeState(int _state);
-
 private:
+	//Reference to main window
 	MainWindow* mParentWindow;
+	//Reference to user
 	std::shared_ptr<User> user;
 
+	//Generates a random username using acceptable characters
 	std::string GenerateUsername();
 
-	//Server button
-	std::unique_ptr<Fl_Button> mServerButton;
-	static void StaticServerButton(Fl_Widget* w, void* _userdata);
-	void ServerButton();
-
-	//Client button
-	std::unique_ptr<Fl_Button> mClientButton;
-	static void StaticClientButton(Fl_Widget* w, void* _userdata);
-	void ClientButton();
-
+	//Header
 
 	std::unique_ptr<Fl_Box> mTitle;
 
-	std::unique_ptr<Fl_Clock> mClock;
+	//Body
 
 	std::unique_ptr<Fl_Box> mInputLabel;
 	std::unique_ptr<Fl_Input> mUsernameInput;
+
+	std::unique_ptr<Fl_Clock> mClock;
+
+	std::unique_ptr<Fl_Button> mServerButton;
+	//Static reference to ServerButton() function
+	static void StaticServerButton(Fl_Widget* w, void* _userdata);
+	//Changes wizard tab present in the footer to the server settings tab
+	void ServerButton();
+
+	std::unique_ptr<Fl_Button> mClientButton;
+	//Static reference to ClientButton() function
+	static void StaticClientButton(Fl_Widget* w, void* _userdata);
+	//Changes wizard tab present in the footer to the client settings tab
+	void ClientButton();
+	
+	//Footer
 
 	std::unique_ptr<Fl_Wizard> mContent;
 
 	std::unique_ptr<Fl_Group> mServerSettings;
 	std::unique_ptr<Fl_Group> mClientSettings;
-
-	static void StaticUpdateSlider(Fl_Widget* w, void* _userdata);
-	void UpdateSlider();
+	
 	std::unique_ptr<Fl_Box> mServerSizeLabel;
 	std::unique_ptr<Fl_Slider> mServerSize;
+	//Static reference to UpdateSlider() function
+	static void StaticUpdateSlider(Fl_Widget* w, void* _userdata);
+	//Grabs the value in the slider and puts it in the slider output box
+	void UpdateSlider();
+
 	std::unique_ptr<Fl_Centered_Output> mSizeOutput;
 
 	std::unique_ptr<Fl_Box> mClientTargetLabel;
 	std::unique_ptr<Fl_Input> mClientTarget;
 
-	static void StaticStartButton(Fl_Widget* w, void* _userdata);
-	void StartButton();
+	
 	std::unique_ptr<Fl_Button> mStartButton;
+	//Static reference to StartButton() function
+	static void StaticStartButton(Fl_Widget* w, void* _userdata);
+	//Performs username check, connects / hosts dependent on active tab, and changes window state
+	void StartButton();
 };

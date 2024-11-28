@@ -29,8 +29,7 @@ class InChat : public Fl_Double_Window
 public:
 	InChat(std::shared_ptr<User> _user, MainWindow* _parent, int _x, int _y, int _w, int _h);
 
-	//Overridden handle function - checks if the '/' key is pressed and if true, gives the input box keyboard focus. 
-	//Returns 0 and allows other handlers to handle key events.
+	//Overridden handle function - checks if the '/' key is pressed and if true, gives the input box keyboard focus.
 	int handle(int event) override;
 	
 	//Update function - automatically called once every tick when active.

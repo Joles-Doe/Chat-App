@@ -43,7 +43,6 @@ void MainWindow::Update()
             mStateChanged = false;
             menu.hide();
             chat.Reset();
-            std::cout << user->GetRoomCode() << std::endl;
             chat.SetRoomCodeLabel(user->GetRoomCode());
             chat.show();
         }
@@ -52,16 +51,21 @@ void MainWindow::Update()
     }
 }
 
+//Returns a pointer to the user
 std::shared_ptr<User> MainWindow::GetUser()
 {
     return user;
 }
 
+//Sets the user pointer
 void MainWindow::SetUser(std::shared_ptr<User> _user)
 {
     user = _user;
 }
 
+//Changes window state - hides and shows specific windows dependent on value
+/// <param name="0:"> Shows the Menu Window </param>
+/// <param name="1:"> Shows the Chat Window </param>
 void MainWindow::ChangeState(int _state)
 {
     mState = _state;
