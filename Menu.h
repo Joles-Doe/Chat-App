@@ -8,14 +8,12 @@
 #include <FL/Fl_Input.H>
 #include <FL/Fl_Button.H>
 #include <FL/fl_ask.H>
-
 #include <FL/Fl_Box.H>
 #include <FL/Fl_Slider.H>
 #include <FL/Fl_Clock.H>
 #include <FL/Fl_Wizard.H>
 #include <FL/Fl_Output.h>
 #include "Fl_Centered_Output.h"
-#include <FL/Fl_Light_Button.H>
 
 #include <memory>
 #include "User.h"

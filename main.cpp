@@ -1,11 +1,10 @@
-#include <iostream>
-#include <vector>
 #include <FL/Fl.H>
 #include "MainWindow.h"
 #include "User.h"
 
 int main(int argc, char* argv[]) //Ensure main has these parameters
 {
+	FreeConsole();
 	srand(time(NULL));
 
 	//Set theming
