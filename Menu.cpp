@@ -8,11 +8,11 @@ Menu::Menu(std::shared_ptr<User> _user, MainWindow* _parent, int _x, int _y, int
 	user = _user;
 
 	//Header
-	mTitle = std::make_unique<Fl_Box>(0, 0, _w, 125, "FLTK CHAT APPLICATION");
+	mTitle = std::make_unique<Fl_Box>(0, 0, _w, 125, "Chat App");
 	mTitle->labelsize(40);
 
 	//Body
-	mInputLabel = std::make_unique<Fl_Box>(25, 140, _w / 2, 75, "USERNAME");
+	mInputLabel = std::make_unique<Fl_Box>(25, 140, _w / 2, 75, "Username");
 	mInputLabel->labelsize(26);
 
 	mUsernameInput = std::make_unique<Fl_Input>(mInputLabel->w() / 2 - 75, 220, 200, 40);
@@ -21,11 +21,11 @@ Menu::Menu(std::shared_ptr<User> _user, MainWindow* _parent, int _x, int _y, int
 
 	mClock = std::make_unique<Fl_Clock>((_w / 2) + 50, 140, 300, 300);
 
-	mServerButton = std::make_unique<Fl_Button>(25, 300, mInputLabel->w() / 2 - 25, 100, "HOST");
+	mServerButton = std::make_unique<Fl_Button>(25, 300, mInputLabel->w() / 2 - 25, 100, "Host");
 	mServerButton->labelsize(20);
 	mServerButton->callback(StaticServerButton, (void*)this);
 
-	mClientButton = std::make_unique<Fl_Button>(mInputLabel->w() / 2 + 50, 300, mInputLabel->w() / 2 - 25, 100, "CLIENT");
+	mClientButton = std::make_unique<Fl_Button>(mInputLabel->w() / 2 + 50, 300, mInputLabel->w() / 2 - 25, 100, "Join");
 	mClientButton->labelsize(20);
 	mClientButton->callback(StaticClientButton, (void*)this);
 
@@ -65,7 +65,7 @@ Menu::Menu(std::shared_ptr<User> _user, MainWindow* _parent, int _x, int _y, int
 	}
 	mContent->end();
 
-	mStartButton = std::make_unique<Fl_Button>(((_w / 2) + 50) + mClock->w() / 6, 550, 200, 200, "START");
+	mStartButton = std::make_unique<Fl_Button>(((_w / 2) + 50) + mClock->w() / 6, 550, 200, 200, "Start");
 	mStartButton->labelsize(28);
 	mStartButton->callback(StaticStartButton, (void*)this);
 

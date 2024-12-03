@@ -1,11 +1,14 @@
 #include "MainWindow.h"
 
 MainWindow::MainWindow(std::shared_ptr<User> _user, int _w, int _h)
-    : Fl_Window(_w, _h, "TEST"), Timer(1.0f / 60.0f),
+    : Fl_Window(_w, _h, "Chat App"), Timer(1.0f / 60.0f),
     menu(_user, this, 0, 0, _w, _h),
     chat(_user, this, 0, 0, _w, _h),
     mChatVersion("Version 1.0.0")
 {
+    mWindowIcon = std::make_shared<Fl_PNG_Image>("Icon.png");
+    icon(mWindowIcon.get());
+
     //MainWindow::size_range(_w, _h);
     user = _user;
 

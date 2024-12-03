@@ -1,6 +1,7 @@
 #pragma once
 #include "Timer.h"
 #include <FL/Fl_Window.H>
+#include <FL/Fl_PNG_Image.H>
 #include <FL/Fl_Button.H>
 #include <FL/Fl_Group.H>
 
@@ -37,6 +38,8 @@ public:
     void ChangeState(int _state);
 
 private:
+    std::shared_ptr<Fl_PNG_Image> mWindowIcon;
+
     std::shared_ptr<User> user;
 
     bool mStateChanged{ false };

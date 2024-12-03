@@ -14,7 +14,7 @@ InChat::InChat(std::shared_ptr<User> _user, MainWindow* _parent, int _x, int _y,
 
 	//mTitleBar = std::make_unique<Fl_Box>(100, 0, _w - 250, 100);
 
-	mQuitButton = std::make_unique<Fl_Button>(_w - 150, 0, 150, 100, "QUIT");
+	mQuitButton = std::make_unique<Fl_Button>(_w - 150, 0, 150, 100, "Quit");
 	mQuitButton->labelsize(25);
 	mQuitButton->callback(StaticQuit, (void*)this);
 
@@ -33,7 +33,7 @@ InChat::InChat(std::shared_ptr<User> _user, MainWindow* _parent, int _x, int _y,
 	mInput->callback(StaticTextInput, (void*)this);
 	mInput->textsize(20);
 
-	mSendButton = std::make_unique<Fl_Button>(_w - 150, _h - 100, 150, 100, "SEND");
+	mSendButton = std::make_unique<Fl_Button>(_w - 150, _h - 100, 150, 100, "Send");
 	mSendButton->labelsize(25);
 	mSendButton->callback(StaticTextInput, (void*)this);
 
